@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八字深度解读｜甲木女命·甲辰日·典藏融合版</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  background:#020503 !important;
+  color:#ffffff;
+  font-family:'Noto Serif SC',serif; 
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ── 甲木主题变量 (翠绿/自然/木火通明) ── */
+:root {
+  --p:   #5AB86C;
+  --pb:  #7ADE94;
+  --pd:  rgba(90,184,108,0.16);
+  --pg:  rgba(90,184,108,0.32);
+  --bg:  #020503;
+  --bg2: #050A06;
+  --trans: 1.2s cubic-bezier(0.4,0,0.2,1);
+  
+  /* 五行专属色阶 */
+  --wood: #7ADE94; 
+  --fire: #E86C4F; 
+  --earth:#C4B094; 
+  --metal:#D0D6DF; 
+  --water:#60A8F0;
+}
+
+/* ── 动态背景层 ── */
+#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:
+    radial-gradient(ellipse at 22% 48%, rgba(90,184,108,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 76% 22%, rgba(122,222,148,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 52% 80%, rgba(30,80,40,0.06) 0%, transparent 50%);
+  pointer-events:none; z-index:1;
+}
+body::after {
+  content:''; position:fixed; inset:-200%;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.35; pointer-events:none; z-index:2;
+  animation:grain 0.5s steps(1) infinite;
+}
+
+@keyframes grain {
+  0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,2%)}
+  30%{transform:translate(-1%,4%)}40%{transform:translate(2%,-1%)}50%{transform:translate(-3%,2%)}
+  60%{transform:translate(1%,-2%)}70%{transform:translate(3%,3%)}80%{transform:translate(-2%,1%)}90%{transform:translate(1%,-3%)}
+}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:rgba(0,0,0,0.3)}
+::-webkit-scrollbar-thumb{background:rgba(90,184,108,0.4);border-radius:2px}
+
+.container { position:relative; z-index:10; max-width:960px; margin:0 auto; padding:0 28px 140px; }
+
+/* ══ 顶部列与音效 ══ */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:990;height:52px;background:rgba(2,5,3,0.88);border-bottom:1px solid rgba(90,184,108,0.25);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+.top-logo{font-family:'Ma Shan Zheng',cursive;font-size:1.1rem;color:var(--pb);letter-spacing:0.2em}
+.top-right{font-family:'Noto Sans SC',sans-serif;font-size:0.6rem;letter-spacing:0.28em;color:rgba(122,222,148,0.5)}
+.audio-btn{position:fixed;bottom:30px;right:30px;width:50px;height:50px;border-radius:50%;background:rgba(2,5,3,0.9);border:1px solid rgba(90,184,108,0.5);color:var(--pb);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:990;box-shadow:0 0 20px rgba(90,184,108,0.2);transition:all .3s}
+.audio-btn:hover{transform:scale(1.08);box-shadow:0 0 32px rgba(90,184,108,0.4);border-color:var(--pb)}
+.audio-hint{position:fixed;bottom:24px;right:92px;background:rgba(2,5,3,0.92);border:1px solid rgba(90,184,108,0.35);padding:10px 36px 10px 16px;border-radius:8px;font-family:'Noto Sans SC',sans-serif;color:var(--pb);z-index:990;backdrop-filter:blur(24px);display:flex;align-items:center;gap:10px;animation:ahint 3s ease-in-out infinite}
+.audio-hint::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left-color:rgba(90,184,108,0.35)}
+@keyframes ahint{0%,100%{opacity:0.6}50%{opacity:1}}
+.audio-hint-close{position:absolute;top:6px;right:8px;width:18px;height:18px;border-radius:50%;background:rgba(90,184,108,0.15);border:none;color:rgba(230,250,235,0.6);font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.audio-hint-icon{font-size:0.95rem;animation:abounce 1.4s ease-in-out infinite;display:inline-block}
+@keyframes abounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.audio-hint-main{font-size:0.7rem;font-weight:500;letter-spacing:0.1em;display:block;color:#E6F5EA}
+.audio-hint-sub{font-size:0.58rem;opacity:0.6;display:block;margin-top:2px;letter-spacing:0.05em}
+
+#global-tooltip{
+  position:fixed;background:rgba(2,5,3,0.96);backdrop-filter:blur(24px);
+  border:1px solid rgba(90,184,108,0.5);
+  box-shadow:0 16px 40px rgba(0,0,0,0.8),0 0 30px rgba(90,184,108,0.15),inset 0 0 20px rgba(90,184,108,0.06);
+  padding:16px 20px;border-radius:8px;font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;color:#E6F5EA;
+  max-width:290px;line-height:1.8;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity 0.22s ease,transform 0.22s ease,visibility 0.22s;z-index:10000;left:0;top:0;
+}
+#global-tooltip.active{opacity:1;visibility:visible;transform:translateY(0)}
+
+/* ══ HERO ══ */
+.hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:relative; padding:90px 0 40px; }
+.hero-tag{font-family:'Noto Sans SC',sans-serif;font-size:0.6rem;letter-spacing:0.55em;color:rgba(230,250,235,0.6);margin-bottom:28px;display:flex;align-items:center;gap:16px}
+.hero-tag::before,.hero-tag::after{content:'';width:44px;height:1px;background:linear-gradient(90deg,transparent,rgba(90,184,108,0.6))}
+.hero-tag::after{transform:scaleX(-1)}
+
+.hero-emblem {
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:clamp(8rem,20vw,14rem);
+  color:rgba(122,222,148,0.95);
+  line-height:1;
+  margin-bottom:24px;
+  text-shadow:0 0 28px rgba(90,184,108,0.5),0 0 60px rgba(90,184,108,0.25),0 0 120px rgba(40,160,60,0.15);
+  animation:emblem-breathe 4.5s ease-in-out infinite;
+  position:relative;z-index:3;
+}
+@keyframes emblem-breathe {
+  0%,100%{opacity:0.88;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.025);text-shadow:0 0 40px rgba(90,184,108,0.7),0 0 80px rgba(90,184,108,0.35),0 0 140px rgba(40,160,60,0.2)}
+}
+
+.hero-name-row{font-family:'Ma Shan Zheng',cursive;font-size:clamp(1.1rem,2.3vw,1.6rem);color:rgba(230,250,235,0.95);letter-spacing:0.28em;margin-bottom:8px}
+.hero-sub{font-family:'Noto Sans SC',sans-serif;font-size:0.7rem;letter-spacing:0.45em;color:var(--pb);opacity:0.9;margin-bottom:36px}
+
+.birth-bar{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.22);border-radius:44px;padding:12px 32px;margin-bottom:44px;backdrop-filter:blur(20px);box-shadow:0 12px 40px rgba(0,0,0,0.5),inset 0 0 24px rgba(90,184,108,0.06);font-family:'Noto Sans SC',sans-serif;font-size:0.75rem;letter-spacing:0.1em;color:#E6F5EA}
+.birth-bar .dot{color:var(--pb);font-size:0.4rem;opacity:0.6}
+.birth-bar .hl{color:var(--pb);font-weight:500}
+
+/* 四柱与干支颜色 */
+.c-wood  { color:var(--wood) !important; text-shadow: 0 0 8px rgba(122,222,148,0.3); }
+.c-fire  { color:var(--fire) !important; text-shadow: 0 0 8px rgba(232,108,79,0.3); }
+.c-earth { color:var(--earth) !important; text-shadow: 0 0 8px rgba(196,176,148,0.3); }
+.c-metal { color:var(--metal) !important; text-shadow: 0 0 8px rgba(208,214,223,0.3); }
+.c-water { color:var(--water) !important; text-shadow: 0 0 8px rgba(96,168,240,0.3); }
+
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:36px;width:100%;max-width:640px}
+.pillar{display:flex;flex-direction:column;align-items:center;background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.15);padding:20px 12px;border-radius:6px;backdrop-filter:blur(20px);transition:all .4s;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.35)}
+.pillar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--pb),transparent);opacity:0;transition:opacity .4s}
+.pillar:hover{border-color:rgba(122,222,148,0.45);transform:translateY(-5px);background:rgba(90,184,108,0.1);box-shadow:0 16px 40px rgba(0,0,0,0.5)}
+.pillar:hover::before{opacity:1}
+.pillar.day-master{border-color:rgba(122,222,148,0.6);background:rgba(90,184,108,0.12);box-shadow:inset 0 0 32px rgba(90,184,108,0.18),0 0 0 1px rgba(90,184,108,0.25);animation:dmPulse 3.5s ease-in-out infinite}
+@keyframes dmPulse{0%,100%{box-shadow:inset 0 0 32px rgba(90,184,108,0.18),0 0 0 1px rgba(90,184,108,0.25),0 0 0 0 rgba(90,184,108,0)}50%{box-shadow:inset 0 0 48px rgba(90,184,108,0.3),0 0 0 1px rgba(90,184,108,0.4),0 0 28px 6px rgba(90,184,108,0.15)}}
+
+.p-lbl{font-size:0.58rem;letter-spacing:0.25em;color:rgba(230,250,235,0.5);margin-bottom:8px;font-family:'Noto Sans SC',sans-serif}
+.p-tg-god{font-size:0.6rem;color:var(--pb);margin-bottom:6px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.08em;white-space:nowrap}
+.p-tg,.p-dz{font-family:'Ma Shan Zheng',cursive;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.1}
+.p-tg {margin-bottom:6px}
+.p-dz-god{font-size:0.6rem;color:var(--pb);margin-top:8px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.08em;white-space:nowrap}
+.p-cs{font-size:0.55rem;color:rgba(230,250,235,0.7);margin-top:6px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.1em;background:rgba(90,184,108,0.15);padding:2px 6px;border-radius:3px;white-space:nowrap}
+.p-hidden{font-size:0.52rem;color:rgba(230,250,235,0.6);margin-top:8px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.05em;border-top:1px solid rgba(90,184,108,0.2);padding-top:6px;width:100%;text-align:center;line-height:1.4}
+.p-nayin{font-size:0.5rem;color:rgba(180,240,200,0.85);margin-top:8px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.08em;background:rgba(90,184,108,0.12);padding:3px 8px;border-radius:4px;white-space:nowrap}
+
+/* ══ SECTIONS ══ */
+.section{padding:82px 0;border-top:1px solid rgba(90,184,108,0.08)}
+.sec-hd{display:flex;align-items:flex-start;gap:22px;margin-bottom:48px}
+.sec-num{font-family:'Ma Shan Zheng',cursive;font-size:3rem;color:var(--pb);opacity:0.4;line-height:1;flex-shrink:0;padding-top:4px}
+.sec-ti-wrap{flex:1}
+.sec-ti{font-size:1.38rem;font-weight:600;color:var(--pb);letter-spacing:0.09em;line-height:1.4}
+.sec-en{font-size:0.6rem;letter-spacing:0.36em;color:var(--pb);opacity:0.6;font-family:'Noto Sans SC',sans-serif;margin-top:5px;text-transform:uppercase}
+.sec-intro{font-size:0.92rem;line-height:2.25;color:rgba(230,250,235,0.75);margin-top:12px;font-weight:300;letter-spacing:0.02em}
+
+.card{background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.12);border-radius:6px;padding:36px 40px;margin-bottom:18px;position:relative;overflow:hidden;backdrop-filter:blur(24px);transition:border-color .4s,box-shadow .4s}
+.card:hover{border-color:rgba(122,222,148,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--pb) 28%,var(--p) 72%,transparent)}
+.card-ti{font-size:1.04rem;color:var(--pb);font-weight:600;margin-bottom:20px;letter-spacing:0.05em;display:flex;align-items:center;gap:9px;line-height:1.5;font-family:'Noto Sans SC',sans-serif;}
+.card-ti::before{content:'◆';font-size:0.38rem;color:var(--pb);flex-shrink:0}
+.card p{font-size:0.94rem;line-height:2.3;color:rgba(230,250,235,0.88);font-weight:300;margin-bottom:14px;text-align:justify;letter-spacing:0.02em}
+.card p:last-child{margin-bottom:0}
+
+.quote{border-left:2px solid var(--pb);padding:14px 20px;margin:14px 0 20px;background:rgba(90,184,108,0.06);font-style:italic;color:rgba(230,250,235,0.85);font-size:0.88rem;line-height:2.05;letter-spacing:0.05em}
+
+/* 五行模块 */
+.wx-sec-title{font-size:0.95rem;color:var(--pb);font-weight:600;margin-bottom:16px;letter-spacing:0.05em;display:flex;align-items:center;gap:8px;font-family:'Noto Sans SC',sans-serif;}
+.wx-sec-title::before{content:'◆';font-size:0.6rem;color:var(--pb)}
+.wx-power-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:36px}
+.wx-power-card{background:rgba(5,10,6,0.5);border:1px solid rgba(90,184,108,0.12);border-radius:8px;padding:24px 10px;text-align:center;transition:all .3s;backdrop-filter:blur(16px)}
+.wx-power-card:hover{border-color:rgba(122,222,148,0.35);background:rgba(5,10,6,0.8);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.wx-p-char{font-family:'Ma Shan Zheng',cursive;font-size:2rem;margin-bottom:6px;line-height:1}
+.wx-p-god{font-family:'Noto Sans SC',sans-serif;font-size:0.65rem;color:rgba(230,250,235,0.5);margin-bottom:20px;letter-spacing:0.05em}
+.wx-p-bar{width:65%;height:3px;background:rgba(255,255,255,0.06);margin:0 auto 14px;border-radius:2px;position:relative}
+.wx-p-fill{position:absolute;left:0;top:0;height:100%;border-radius:2px;box-shadow:0 0 10px currentColor}
+.wx-p-desc{font-family:'Noto Sans SC',sans-serif;font-size:0.75rem;color:rgba(230,250,235,0.85);font-weight:500;letter-spacing:0.1em}
+.wx-matrix-container{display:flex;gap:24px;align-items:center;background:rgba(5,10,6,0.65);border:1px solid rgba(90,184,108,0.15);border-radius:8px;padding:32px;margin:0 0 24px;backdrop-filter:blur(24px);flex-wrap:wrap}
+.wx-canvas-wrap{flex:1;min-width:300px;margin:0;border:none;padding:0;background:transparent;position:relative;display:flex;flex-direction:column;align-items:center}
+.wx-flow-desc{flex:1;min-width:300px;font-size:0.88rem;line-height:2.1;color:rgba(230,250,235,0.85);font-weight:300;border-left:1px solid rgba(90,184,108,0.2);padding-left:24px}
+.wx-note{font-family:'Noto Sans SC',sans-serif;font-size:0.66rem;color:rgba(230,250,235,0.38);text-align:center;margin-top:10px;letter-spacing:0.12em}
+
+/* ══ 10行十神图表 ══ */
+.tg-chart-box{background:rgba(5,10,6,0.65);border:1px solid rgba(90,184,108,0.15);border-radius:8px;padding:32px 36px;margin:24px 0;backdrop-filter:blur(16px)}
+.tg-row{display:flex;align-items:center;margin-bottom:12px;gap:16px}
+.tg-row:last-child{margin-bottom:0}
+.tg-label-wrap{width:105px;flex-shrink:0;text-align:right}
+.tg-label{font-size:0.8rem;color:var(--pb);font-weight:500;margin-bottom:2px;white-space:nowrap;font-family:'Noto Sans SC',sans-serif;}
+.tg-label.empty{color:rgba(230,250,235,0.4)}
+.tg-sub{font-size:0.55rem;font-family:'Noto Sans SC',sans-serif;color:rgba(230,250,235,0.5);letter-spacing:0.05em;white-space:nowrap}
+.tg-track{flex-grow:1;height:8px;background:rgba(0,0,0,0.4);border-radius:4px;position:relative;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,0.5)}
+.tg-fill{height:100%;border-radius:4px;position:relative;transition:width 1.2s cubic-bezier(0.2,0.8,0.2,1)}
+.tg-fill::after{content:'';position:absolute;top:0;right:0;bottom:0;width:20px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4));border-radius:0 4px 4px 0}
+.tg-fill.fire{background:linear-gradient(90deg,rgba(232,108,79,0.4),var(--fire));box-shadow:0 0 15px rgba(232,108,79,0.5)}
+.tg-fill.water{background:linear-gradient(90deg,rgba(96,168,240,0.4),var(--water));box-shadow:0 0 15px rgba(96,168,240,0.5)}
+.tg-fill.metal{background:linear-gradient(90deg,rgba(208,214,223,0.3),var(--metal));box-shadow:0 0 15px rgba(208,214,223,0.4)}
+.tg-fill.wood{background:linear-gradient(90deg,rgba(122,222,148,0.4),var(--wood));box-shadow:0 0 15px rgba(122,222,148,0.5)}
+.tg-fill.earth{background:linear-gradient(90deg,rgba(196,176,148,0.4),var(--earth));box-shadow:0 0 15px rgba(196,176,148,0.5)}
+.tg-fill.empty{background:transparent;box-shadow:none}
+.tg-pct{width:40px;flex-shrink:0;font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:#E6F5EA;font-weight:600;text-align:left}
+.tg-pct.empty{color:rgba(230,250,235,0.3)}
+
+/* ══ 盒子与其他 ══ */
+.oppo-box{background:linear-gradient(135deg,rgba(90,184,108,0.09),rgba(90,184,108,0.02));border:1px solid rgba(90,184,108,0.35);border-radius:6px;padding:32px 36px;margin:20px 0;backdrop-filter:blur(20px)}
+.oppo-box h3{color:var(--pb);font-size:1.04rem;margin-bottom:20px;letter-spacing:0.09em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
+.warn-box{background:linear-gradient(135deg,rgba(232,108,79,0.08),rgba(232,108,79,0.02));border:1px solid rgba(232,108,79,0.3);border-radius:6px;padding:32px 36px;margin:20px 0;backdrop-filter:blur(20px)}
+.warn-box h3{color:var(--fire);font-size:1.04rem;margin-bottom:20px;letter-spacing:0.09em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
+.taisui-box{background:linear-gradient(135deg,rgba(90,184,108,0.06),rgba(0,0,0,0.5));border:1px solid rgba(90,184,108,0.3);border-radius:6px;padding:32px 36px;margin:20px 0;backdrop-filter:blur(20px)}
+.taisui-box h3{color:var(--pb);font-size:1.04rem;margin-bottom:20px;letter-spacing:0.09em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
+
+.strat-list{list-style:none}
+.strat-list li{font-size:0.92rem;line-height:2.15;color:rgba(230,250,235,0.88);font-weight:300;padding-left:20px;position:relative;margin-bottom:12px;letter-spacing:0.02em}
+.strat-list li:last-child{margin-bottom:0}
+.strat-list li::before{content:'▸';position:absolute;left:0;top:0;font-size:0.95rem;color:var(--pb)}
+
+/* ══ 婚姻与财富框 ══ */
+.romance-diagram{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+.romance-box{background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:26px;backdrop-filter:blur(24px);transition:border-color .4s}
+.romance-box:hover{border-color:rgba(90,184,108,0.4)}
+.romance-box-ti{font-size:0.92rem;color:var(--pb);font-weight:600;margin-bottom:16px;letter-spacing:0.06em;display:flex;align-items:center;gap:7px;font-family:'Noto Sans SC',sans-serif;}
+.romance-box-ti::before{content:'❧';color:var(--pb);font-size:0.75rem;opacity:0.85;flex-shrink:0}
+.romance-box p{font-size:0.86rem;line-height:2.05;color:rgba(230,250,235,0.88);font-weight:300}
+
+.wealth-tier{display:flex;align-items:stretch;margin:24px 0;border:1px solid rgba(90,184,108,0.2);border-radius:6px;overflow:hidden;background:rgba(5,10,6,0.65);backdrop-filter:blur(24px)}
+.wealth-tier-bar{width:6px;background:linear-gradient(180deg,var(--water) 0%,var(--wood) 50%,var(--fire) 100%);flex-shrink:0}
+.wealth-tier-body{padding:30px 36px;flex:1}
+.wealth-tier-body p{font-size:0.94rem;line-height:2.25;color:rgba(230,250,235,0.88);font-weight:300;margin-bottom:12px}
+
+.chart-wrap{background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:28px 20px;margin:24px 0;position:relative;backdrop-filter:blur(24px)}
+.chart-title{font-family:'Noto Sans SC',sans-serif;font-size:0.72rem;color:var(--pb);letter-spacing:0.2em;margin-bottom:16px;text-align:center}
+.chart-inner{position:relative;width:100%;height:320px}
+
+/* ══ 称骨诀 CSS ══ */
+.bone-wrap { display:flex; align-items:center; gap:40px; padding:36px; background:rgba(5,10,6,0.88); border:1px solid rgba(90,184,108,0.15); border-radius:6px; margin:28px 0; backdrop-filter:blur(16px); }
+.bone-num-wrap { text-align:center; flex-shrink:0; }
+.bone-num { font-family:'Ma Shan Zheng',cursive; font-size:4.5rem; color:var(--pb); line-height:1; text-shadow:0 0 30px rgba(122,222,148,0.3); }
+.bone-unit { font-size:1.2rem; color:var(--pb); font-family:'Noto Serif SC',serif; margin:0 4px; }
+.bone-body p { font-size:0.94rem; line-height:2.35; color:rgba(230,250,235,0.88); font-weight:300; }
+
+/* 称骨计算明细 */
+.bone-breakdown{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0;justify-content:center}
+.bone-item{background:rgba(90,184,108,0.1);border:1px solid rgba(90,184,108,0.25);border-radius:4px;padding:8px 14px;text-align:center;font-family:'Noto Sans SC',sans-serif;}
+.bone-item-lbl{font-size:0.6rem;color:rgba(230,250,235,0.5);display:block;margin-bottom:4px;letter-spacing:0.1em}
+.bone-item-val{font-size:0.88rem;color:var(--pb);font-weight:600}
+
+/* ══ 视频框 ══ */
+.video-box{position:relative;width:100%;border-radius:6px;overflow:hidden;border:1px solid rgba(90,184,108,0.2);background:rgba(2,5,3,0.6);box-shadow:0 8px 24px rgba(0,0,0,0.5);margin-top:24px}
+.video-box video{display:block;width:100%;height:auto;max-height:480px;object-fit:cover;outline:none}
+.video-fallback{padding:40px;text-align:center;color:rgba(230,250,235,0.5);font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;line-height:2}
+.video-fallback-icon{font-size:2.5rem;margin-bottom:12px;opacity:0.4;display:block}
+
+/* ══ 神煞与地势网格 ══ */
+.dishi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0}
+.ss-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0}
+.ss-col{border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:26px;background:rgba(5,10,6,0.88);transition:all .35s;backdrop-filter:blur(24px)}
+.ss-col:hover{border-color:rgba(90,184,108,0.45);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.ss-col-title{font-size:0.95rem;color:var(--pb);font-weight:600;margin-bottom:16px;letter-spacing:0.05em;display:flex;align-items:center;gap:7px;font-family:'Noto Sans SC',sans-serif; border-bottom:1px solid rgba(90,184,108,0.2); padding-bottom:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+/* 神煞单项提取结构 */
+.ss-item{border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:20px;background:rgba(5,10,6,0.88);transition:all .35s;backdrop-filter:blur(24px)}
+.ss-item:hover{border-color:rgba(90,184,108,0.45);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.ss-name{font-size:0.95rem;color:var(--pb);font-weight:600;margin-bottom:6px;letter-spacing:0.05em;display:flex;align-items:center;gap:5px;font-family:'Noto Sans SC',sans-serif;}
+.ss-name::before{content:'◈';font-size:0.48rem;color:var(--pb);flex-shrink:0}
+.ss-rule{font-size:0.68rem;color:rgba(230,250,235,0.5);font-family:'Noto Sans SC',sans-serif;margin-bottom:10px;letter-spacing:0.05em;border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:8px}
+.ss-desc{font-size:0.82rem;color:rgba(230,250,235,0.88);line-height:1.9;font-weight:300}
+
+/* 时间线结构 */
+.rt-timeline{margin:28px 0}
+.rt-title{font-size:0.95rem;color:var(--pb);font-weight:600;margin-bottom:18px;letter-spacing:0.06em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
+.rt-title::before{content:'⏳';color:var(--pb);font-size:0.75rem;flex-shrink:0}
+.rt-items{display:flex;flex-direction:column;gap:0}
+.rt-item{display:flex;gap:0;position:relative}
+.rt-line{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0}
+.rt-dot{width:12px;height:12px;border-radius:50%;border:2px solid;flex-shrink:0;margin-top:3px;position:relative;z-index:1}
+.rt-dot.high{border-color:var(--fire);background:rgba(232,108,79,0.3);box-shadow:0 0 10px rgba(232,108,79,0.4)}
+.rt-dot.mid{border-color:var(--wood);background:rgba(122,222,148,0.3);box-shadow:0 0 10px rgba(122,222,148,0.4)}
+.rt-dot.low{border-color:rgba(196,176,148,0.5);background:rgba(196,176,148,0.15)}
+.rt-connector{flex:1;width:2px;background:linear-gradient(180deg,rgba(122,222,148,0.4),rgba(196,176,148,0.1));margin:2px 0}
+.rt-item:last-child .rt-connector{display:none}
+.rt-content{flex:1;padding:0 0 24px 16px}
+.rt-year{font-size:0.78rem;color:var(--pb);font-family:'Noto Sans SC',sans-serif;letter-spacing:0.15em;margin-bottom:4px;font-weight:500;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rt-gz{font-family:'Ma Shan Zheng',cursive;font-size:1rem;color:var(--wood);margin-bottom:6px}
+.rt-desc{font-size:0.84rem;color:rgba(230,250,235,0.82);line-height:1.95;font-family:'Noto Sans SC',sans-serif;font-weight:300}
+.rt-tag{display:inline-block;font-size:0.55rem;letter-spacing:0.15em;padding:2px 8px;border-radius:3px;margin-top:2px;font-family:'Noto Sans SC',sans-serif;vertical-align:middle;white-space:nowrap}
+.rt-tag.hot{background:rgba(232,108,79,0.18);color:#F0E1E1;border:1px solid rgba(232,108,79,0.4)}
+.rt-tag.warm{background:rgba(122,222,148,0.15);color:#E1F0E1;border:1px solid rgba(122,222,148,0.4)}
+
+/* 地图模块 */
+.map-module{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:start;background:rgba(5,10,6,0.85);border:1px solid rgba(90,184,108,0.2);border-radius:6px;padding:36px 40px;margin:20px 0;backdrop-filter:blur(20px)}
+.map-text h3{color:var(--pb);font-size:1.04rem;margin-bottom:16px;letter-spacing:0.09em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
+.map-text p{font-size:0.9rem;line-height:2.15;color:rgba(230,250,235,0.82);font-weight:300;margin-bottom:20px}
+.city-tags{display:flex;flex-direction:column;gap:10px}
+.city-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;font-size:0.8rem;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.08em;cursor:pointer;transition:all .3s;width:fit-content}
+.city-tag.wood-tag{background:rgba(122,222,148,0.15);border:1px solid rgba(122,222,148,0.4);color:#E1F0E1}
+.city-tag.fire-tag{background:rgba(232,108,79,0.15);border:1px solid rgba(232,108,79,0.4);color:#F0E1E1}
+.city-tag:hover{transform:translateX(5px)}
+.map-svg-container{position:relative;border-radius:6px;overflow:hidden;background:rgba(2,5,3,0.8);border:1px solid rgba(90,184,108,0.2)}
+
+.yun-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-top:24px}
+.yun-card{background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:22px 16px;position:relative;transition:all .35s;backdrop-filter:blur(24px);display:flex;flex-direction:column}
+.yun-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+.yun-card.current::after{content:'▶ 当前大运';position:absolute;top:8px;right:9px;font-size:0.56rem;color:inherit;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.08em}
+.yun-age{font-size:0.6rem;color:var(--pb);opacity:0.8;margin-bottom:8px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.12em}
+.yun-stem{font-family:'Ma Shan Zheng',cursive;font-size:2.1rem;line-height:1;margin-bottom:12px;display:flex;gap:4px}
+.yun-desc{font-size:0.76rem;color:rgba(230,250,235,0.88);line-height:1.85;flex-grow:1;font-weight:300}
+.yun-quality{display:inline-block;font-size:0.56rem;letter-spacing:0.12em;padding:3px 7px;border-radius:3px;margin-top:9px;font-family:'Noto Sans SC',sans-serif}
+.q-great{background:rgba(90,184,108,0.2);color:#E1F0E1;border:1px solid rgba(90,184,108,0.4)}
+.q-good{background:rgba(232,108,79,0.12);color:#F0E1E1;border:1px solid rgba(232,108,79,0.3)}
+.q-warn{background:rgba(96,168,240,0.2);color:#DCE6EB;border:1px solid rgba(96,168,240,0.4)}
+
+/* ══ 大运信息栏 ══ */
+.dayun-info-bar{display:flex;align-items:center;flex-wrap:wrap;gap:20px;background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.2);border-radius:6px;padding:18px 28px;margin-bottom:24px;backdrop-filter:blur(20px)}
+.di-item{display:flex;flex-direction:column;gap:4px}
+.di-label{font-family:'Noto Sans SC',sans-serif;font-size:0.62rem;letter-spacing:0.2em;color:rgba(230,250,235,0.45)}
+.di-val{font-family:'Noto Sans SC',sans-serif;font-size:0.92rem;color:var(--pb);font-weight:500;letter-spacing:0.08em}
+.di-sep{color:var(--pb);opacity:0.35;font-size:0.5rem}
+
+/* ══ 贵人速查 ══ */
+.guiren-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
+.guiren-card{background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:20px;backdrop-filter:blur(24px);transition:border-color .35s}
+.guiren-card:hover{border-color:rgba(90,184,108,0.45)}
+.guiren-ti{font-size:0.88rem;color:var(--pb);font-weight:600;margin-bottom:10px;letter-spacing:0.06em;font-family:'Noto Sans SC',sans-serif;display:flex;align-items:center;gap:6px}
+.guiren-ti::before{content:'✦';font-size:0.52rem;color:var(--pb)}
+.guiren-body{font-size:0.8rem;color:rgba(230,250,235,0.85);line-height:1.9;font-weight:300}
+
+/* ══ 食神泄秀章节 ══ */
+.yixiu-box{background:linear-gradient(135deg,rgba(232,108,79,0.07),rgba(5,10,6,0.6));border:1px solid rgba(232,108,79,0.25);border-radius:6px;padding:32px 36px;margin:20px 0;backdrop-filter:blur(20px)}
+.yixiu-ti{font-size:1.04rem;color:var(--fire);font-weight:600;margin-bottom:18px;letter-spacing:0.08em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
+.yixiu-ti::before{content:'◆';font-size:0.38rem;color:var(--fire);flex-shrink:0}
+
+/* ══ 终章 ══ */
+.verdict{text-align:center;padding:120px 20px 80px;border-top:1px solid rgba(90,184,108,0.08)}
+.verdict-kw{font-family:'Ma Shan Zheng',cursive;font-size:clamp(4rem,11vw,7.5rem);color:transparent;background:linear-gradient(145deg, #5AB86C 0%, #7ADE94 45%, #E86C4F 100%);-webkit-background-clip:text;background-clip:text;line-height:1;margin-bottom:36px;animation:vshine 5.5s ease-in-out infinite}
+@keyframes vshine{0%,100%{filter:brightness(0.95)}50%{filter:brightness(1.3)}}
+.verdict-body{font-size:1.02rem;line-height:3;color:rgba(230,250,235,0.88);max-width:660px;margin:0 auto 48px;font-weight:300;letter-spacing:0.04em}
+.verdict-divider{display:flex;align-items:center;justify-content:center;margin:0 auto 36px;gap:0}
+.verdict-seal{
+  display:inline-block;
+  border:1px solid rgba(90,184,108,0.5);
+  padding:12px 32px;
+  font-family:'Noto Serif SC',serif;
+  font-size:0.95rem;
+  color:var(--pb);
+  letter-spacing:0.2em;
+  background:transparent;
+}
+.footer{text-align:center;padding:36px 0 56px;border-top:1px solid rgba(90,184,108,0.06)}
+.footer-logo{font-family:'Ma Shan Zheng',cursive;font-size:1.35rem;color:var(--pb);opacity:0.4;letter-spacing:0.28em;margin-bottom:9px}
+.footer-txt{font-family:'Noto Sans SC',sans-serif;font-size:0.58rem;color:rgba(230,250,235,0.3);letter-spacing:0.22em;line-height:2.2}
+
+/* 响应式 */
+@media(max-width:768px){
+  .container{padding:0 14px 100px}
+  .section{padding:52px 0}
+  .sec-hd{flex-direction:column;gap:10px;margin-bottom:28px}
+  .sec-num{font-size:2.2rem;padding-top:0}
+  .sec-ti{font-size:1.08rem}
+  .top-bar{padding:0 14px;height:48px}
+  .top-right{display:none}
+  .hero{padding:68px 0 28px}
+  .birth-bar{flex-direction:column;gap:7px;padding:14px 16px;border-radius:10px;width:100%;margin-bottom:28px;font-size:0.7rem}
+  .birth-bar .dot{display:none}
+  .pillars{display:flex;width:100%;gap:5px;margin-bottom:24px}
+  .pillar{flex:1;min-width:0;padding:12px 2px;border-radius:8px}
+  .p-lbl{font-size:0.5rem;letter-spacing:0.12em}
+  .p-tg,.p-dz{font-size:clamp(1.4rem,6vw,1.8rem)}
+  .p-cs{font-size:0.45rem;padding:2px 4px}
+  .p-hidden{font-size:0.45rem}
+  .p-nayin{font-size:0.42rem;padding:2px 4px}
+  .card,.oppo-box,.warn-box,.taisui-box{padding:20px 14px;margin:14px 0}
+  .card p{font-size:0.88rem;line-height:2.1}
+  .dishi-grid,.ss-grid,.romance-diagram{grid-template-columns:1fr}
+  .guiren-grid{grid-template-columns:1fr}
+  .yun-grid{grid-template-columns:1fr}
+  .wealth-tier{flex-direction:column}
+  .wealth-tier-bar{width:100%;height:5px;background:linear-gradient(90deg,var(--water) 0%,var(--wood) 50%,var(--fire) 100%)}
+  .wealth-tier-body{padding:20px 14px}
+  .audio-hint{display:none}
+  .dayun-info-bar{flex-direction:column;align-items:flex-start;gap:8px;padding:14px 16px}
+  .verdict{padding:72px 12px 56px}
+  .verdict-kw{font-size:2.9rem}
+  .verdict-body{font-size:0.9rem;line-height:2.1}
+  .tg-chart-box{padding:24px 14px}
+  .tg-label-wrap{width:80px;text-align:left}
+  .tg-label{font-size:0.7rem}
+  .tg-pct{width:32px;font-size:0.7rem}
+  .wx-power-grid{grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px}
+  .wx-power-card{padding:18px 8px}
+  .wx-p-char{font-size:1.6rem}
+  .bone-wrap{flex-direction:column;gap:16px;text-align:center;padding:24px 16px;}
+  .map-module{grid-template-columns:1fr; padding:20px 14px;}
+  .ss-item{padding: 20px 16px;}
+}
+@media(max-width:400px){.pillars{gap:4px}.pillar{padding:12px 2px}.p-tg,.p-dz{font-size:1.35rem}.p-nayin{display:none}}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+<div id="global-tooltip"></div>
+
+<div class="top-bar">
+  <div class="top-logo">ZenCode · VIP</div>
+  <div class="top-right">命主专属档案 · 八字深度解析 · 典藏融合版</div>
+</div>
+
+<div class="audio-hint" id="audio-hint">
+  <span class="audio-hint-icon">🎵</span>
+  <span>
+    <span class="audio-hint-main">点击解锁沉浸音效</span>
+    <span class="audio-hint-sub">林间鸟鸣与微风 · 纯代码合成</span>
+  </span>
+  <button class="audio-hint-close" id="audio-hint-close" title="关闭提示">✕</button>
+</div>
+<button class="audio-btn" id="audio-btn" aria-label="播放/暂停背景音效" title="点击播放沉浸音效">♪</button>
+
+<main class="container">
+
+<section class="hero">
+  <div class="hero-tag">ZenCode · 命主专属深度档案 · 典藏融合版</div>
+  <div class="hero-emblem">甲</div>
+  <div class="hero-name-row">甲申年 · 癸酉月 · 甲辰日 · 己巳时</div>
+  <div class="hero-sub">秋木凋零 · 官印相生 · 财星归库</div>
+  <div class="birth-bar">
+    <span class="hl">女命（坤造）</span>
+    <span class="dot">✦</span>
+    <span>2004年9月22日</span>
+    <span class="dot">✦</span>
+    <span>经纬度: 106.95°E, 26.45°N (贵州龙里)</span>
+    <span class="dot">✦</span>
+    <span>真太阳时 <span class="hl">10:51 (巳时)</span></span>
+  </div>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="p-lbl">年柱</div>
+      <div class="p-tg-god">比肩</div>
+      <div class="p-tg c-wood">甲</div>
+      <div class="p-dz c-metal">申</div>
+      <div class="p-dz-god">七杀</div>
+      <!-- 【修正1】日主甲木在年支申金为"绝"位，正确 -->
+      <div class="p-cs">日主甲木 · 绝</div>
+      <div class="p-hidden">庚 壬 戊</div>
+      <div class="p-nayin">泉中水</div>
+    </div>
+    <div class="pillar">
+      <div class="p-lbl">月柱</div>
+      <div class="p-tg-god">正印</div>
+      <div class="p-tg c-water">癸</div>
+      <div class="p-dz c-metal">酉</div>
+      <div class="p-dz-god">正官</div>
+      <!-- 【修正2】统一以日主甲木论长生：甲木在月支酉金为"胎"位，并非癸水的状态 -->
+      <div class="p-cs">日主甲木 · 胎</div>
+      <div class="p-hidden">辛</div>
+      <div class="p-nayin">剑锋金</div>
+    </div>
+    <div class="pillar day-master">
+      <div class="p-lbl" style="color:var(--pb)">日柱</div>
+      <div class="p-tg-god" style="color:var(--pb)">日主</div>
+      <div class="p-tg c-wood">甲</div>
+      <div class="p-dz c-earth">辰</div>
+      <div class="p-dz-god">偏财</div>
+      <div class="p-cs" style="color:var(--earth);border:1px solid rgba(196,176,148,0.4)">日主甲木 · 衰</div>
+      <div class="p-hidden">戊 乙 癸</div>
+      <div class="p-nayin">覆灯火</div>
+    </div>
+    <div class="pillar">
+      <div class="p-lbl">时柱</div>
+      <div class="p-tg-god">正财</div>
+      <div class="p-tg c-earth">己</div>
+      <div class="p-dz c-fire">巳</div>
+      <div class="p-dz-god">食神</div>
+      <!-- 【修正3】日主甲木在时支巳火为"病"位，正确 -->
+      <div class="p-cs">日主甲木 · 病</div>
+      <div class="p-hidden">丙 戊 庚</div>
+      <div class="p-nayin">大林木</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">壹</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">源流格局与五行核心：秋木逢金与第一喜用</div>
+      <div class="sec-en">ORIGIN · PATTERN · FAVORABLE ELEMENTS ANALYSIS</div>
+      <div class="sec-intro">纵观全局，五行能量呈现出『金气肃杀，秋木凋零』之象。甲木生于仲秋酉月，正官当令，申金助势，压力极大。然癸水正印透干化杀，巳火暗藏调候。此局之成败，全系于"印星化杀"与"火之调候"。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-ti">特殊结构审查：官杀当令与核心喜用破局</div>
+    <div class="quote">《滴天髓》：「甲木参天，脱胎要火。春不容金，秋不容土。」又云：「木逢金克，定主腰肋之灾。」《子平真诠》云：「秋木凋零，独爱火制金而暖局。」</div>
+    <p><strong>一、扶抑之法：官杀极旺，高压淬炼。</strong>甲木生于酉月，年支逢申，官杀结党，金气肃杀。这代表命主天生承受极大的压力与责任，外部环境充满竞争与严苛的规训，自身偏弱，注定要在高压中成长。需辅以【水/木】生扶。</p>
+    <p><strong>二、通关之法：官印相生，绝处逢生。</strong>最妙月干「癸水」正印透出，坐酉金得生。金多虽显锐利，但癸水清透，完美通关金木之战，化解官杀戾气，转化为滋养甲木的源泉，赋予了极高的悟性与化解危机的智慧。</p>
+    <p><strong>三、调候之法：第一用神，非【火】莫属。</strong>甲木生于秋月，金旺木凋，更需火来制金暖局。时支「巳」中暗藏「丙」火食神。这抹深藏的火不仅能制约过旺的官杀，更能在关键时刻促成「丙辛暗合化水」——巳中藏丙与酉中藏辛，隔支相合（此为地支藏干间的虚合），暗中产出水（印星）来生扶日主。此乃原局最精妙的破局之钥，故【火】为全局第一用神。</p>
+    <p style="margin-top:16px;border-top:1px dashed rgba(90,184,108,0.15);padding-top:16px;color:var(--pb)">
+      <strong>全局定调：官印相生格。第一喜用神为【火】（调候暖局，丙辛藏干暗合化水制杀生身），第二喜用为【水】（通关化杀），辅以【木】帮身。最忌【土】生金破印，忌【金】过旺加重内耗。</strong>
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-ti">命局能量视觉化演绎：秋林夜雨与生生不息</div>
+    <p>点开这段专属的推演视觉档案，映入眼帘的便是你原局的具象化呈现：幽静的秋林、肃杀的金属气息。这正是<strong>'官印相生'</strong>的真实写照。即使在肃杀压抑的秋季（极旺的官杀），天降甘霖（癸水印星）不仅洗涤了尘埃，更滋养了干涸的甲木。视频中的水气氤氲，暗流涌动，正是你在重重压力中汲取知识、积蓄力量的蛰伏期。你需要留意画面深处微弱的灯火（巳火），那便是你依赖印星与食神智慧在绝境中生发的力量。</p>
+    <div class="video-box">
+      <video controls playsinline preload="none" poster="preview.jpg">
+        <source src="vedo.mp4" type="video/mp4">
+        <div class="video-fallback">
+          <span class="video-fallback-icon">🎬</span>
+          <strong style="color:var(--pb)">视频文件加载中</strong><br>
+          请确认 vedo.mp4 与本文件位于同一目录
+        </div>
+      </video>
+    </div>
+  </div>
+
+  <div class="wx-sec-title">五行力量分布</div>
+  <!-- 【修正4】官杀+金对应总量约28%（申酉两支）与原文35%校正，土约20%，整体与十神矩阵保持一致 -->
+  <div class="wx-power-grid">
+    <div class="wx-power-card">
+      <div class="wx-p-char" style="color:var(--metal)">金</div>
+      <div class="wx-p-god">官杀（申+酉）</div>
+      <div class="wx-p-bar"><div class="wx-p-fill" style="width:28%;background:var(--metal);color:var(--metal);box-shadow:0 0 10px var(--metal)"></div></div>
+      <div class="wx-p-desc">极旺 (忌)</div>
+    </div>
+    <div class="wx-power-card">
+      <div class="wx-p-char" style="color:var(--water)">水</div>
+      <div class="wx-p-god">印星（癸+壬藏）</div>
+      <div class="wx-p-bar"><div class="wx-p-fill" style="width:22%;background:var(--water);color:var(--water);box-shadow:0 0 10px var(--water)"></div></div>
+      <div class="wx-p-desc">化杀枢纽 (喜)</div>
+    </div>
+    <div class="wx-power-card">
+      <div class="wx-p-char" style="color:var(--earth)">土</div>
+      <div class="wx-p-god">财星（辰+己）</div>
+      <div class="wx-p-bar"><div class="wx-p-fill" style="width:25%;background:var(--earth);color:var(--earth)"></div></div>
+      <div class="wx-p-desc">偏强 (忌)</div>
+    </div>
+    <div class="wx-power-card">
+      <div class="wx-p-char" style="color:var(--wood)">木</div>
+      <div class="wx-p-god">比劫 / 日主</div>
+      <div class="wx-p-bar"><div class="wx-p-fill" style="width:18%;background:var(--wood);color:var(--wood)"></div></div>
+      <div class="wx-p-desc">偏弱 (辅)</div>
+    </div>
+    <div class="wx-power-card">
+      <div class="wx-p-char" style="color:var(--fire)">火</div>
+      <div class="wx-p-god">食神（巳藏丙）</div>
+      <div class="wx-p-bar"><div class="wx-p-fill" style="width:7%;background:var(--fire);color:var(--fire);box-shadow:0 0 10px var(--fire)"></div></div>
+      <div class="wx-p-desc">深藏 (第一用神)</div>
+    </div>
+  </div>
+
+  <div class="wx-sec-title" style="margin-top:32px">五行生克动态矩阵</div>
+  <div class="wx-matrix-container">
+    <div class="wx-canvas-wrap">
+      <canvas id="wxCanvas"></canvas>
+      <div class="wx-note">节点光晕与连线流动代表能量生克</div>
+    </div>
+    <div class="wx-flow-desc">
+      <strong style="color:var(--pb);font-size:1.05rem;display:block;margin-bottom:12px">五行能量流通剖析</strong>
+      原局能量核心高度聚拢于【金】。土生金旺，金木交战，整体气场如肃杀秋林，蕴藏着极强的责任感与高压环境。<br><br>
+      <b>阻塞点（病）：</b>金气过盛而直接克伐日主【木】，容易导致精神内耗、压力过大。且土生金，财星反而助长了压力的来源，求财之路往往伴随高压。<br><br>
+      <b>通关钥（药）：</b>第一亟需【火】（食神）来制约过旺的金气，火克金，护卫木，且巳中丙与酉中辛藏干暗合化水。第二需【水】（印星）来化解金的锐气，金生水，水生木，将压力转化为智慧。如此方能完成"火制官杀、印化官杀"的完美解局。
+    </div>
+  </div>
+</section>
+
+<!-- 【修正5·贰章整体重写】统一以日主甲木论十二长生，纠正月柱"胎"的主体混淆错误 -->
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">贰</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">地势与能量曲线（十二长生 · 以日主甲木统一论）</div>
+      <div class="sec-en">EARTHLY BRANCHES STATES & ENERGY DYNAMICS</div>
+      <div class="sec-intro">四柱十二长生，统一以日主甲木的视角推演，揭示你在不同人生阶段的底盘能量高低。需特别说明：此处四柱长生皆以甲木日主为准，而非以各柱天干自身论。</div>
+    </div>
+  </div>
+
+  <div class="dishi-grid">
+    <div class="ss-col" style="border-color:rgba(208,214,223,0.3)">
+      <div class="ss-col-title" style="color:var(--metal)">年柱 ·【绝】甲木在申</div>
+      <div class="ss-desc" style="line-height:1.8">处于能量谷底的绝地。意味着早年生活环境或家境曾经历过断层、重组，在严苛的环境中绝地求生，赋予了你破后而立的韧性与不畏强权的底气。</div>
+    </div>
+    <!-- 【核心修正】原文写"月柱胎（酉）"但将其归为"癸水"的状态，导致混淆。正确：甲木在月支酉金确为"胎"位，但这是日主甲木的状态。现补全说明。 -->
+    <div class="ss-col" style="border-color:rgba(208,214,223,0.3)">
+      <div class="ss-col-title" style="color:var(--metal)">月柱 ·【胎】甲木在酉</div>
+      <div class="ss-desc" style="line-height:1.8">日主甲木在月令酉金处于胎位——如同种子在母体中孕育，能量微弱但充满潜力。这代表在青年时期，你在官杀极旺的高压环境中默默吸收养分，虽然当前感受到大量外部压制，但这正是为破土储能的蛰伏期。</div>
+    </div>
+    <div class="ss-col" style="border-color:rgba(196,176,148,0.5); background:rgba(196,176,148,0.08)">
+      <div class="ss-col-title" style="color:var(--earth)">日柱 ·【衰】甲木在辰</div>
+      <div class="ss-desc" style="line-height:1.8">此为你本命核心气场。并非衰败，而是"藏锋敛锷"。你不追求表面的张扬，而是拥有成熟、稳重的老灵魂，在中年时期更倾向于稳健的幕后布局，善借财库之地积蓄力量。</div>
+    </div>
+    <div class="ss-col" style="border-color:rgba(232,108,79,0.3)">
+      <div class="ss-col-title" style="color:var(--fire)">时柱 ·【病】甲木在巳</div>
+      <div class="ss-desc" style="line-height:1.8">代表对万物有着异乎寻常的敏感度。历经世事后，晚年的你更注重精神层面的修养与内省。巳中暗藏丙火，病木得火温养，反而令你洞察力极强，依靠智慧而非体力来影响世界。</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">叁</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">纳音五行与灵魂底色：清泉与灯火的明暗</div>
+      <div class="sec-en">NA YIN · MELODIC ELEMENTS ANALYSIS</div>
+      <div class="sec-intro">四柱纳音揭示了你灵魂深处的四重声部。外表清冷肃杀，内心却藏着一盏不灭的孤灯。</div>
+    </div>
+  </div>
+  <div class="dishi-grid">
+    <div class="ss-col">
+      <div class="ss-col-title" style="color:var(--water)">年柱 甲申 ·【泉中水】</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「泉中水者，寒泉清冽，源出重山，不染尘埃。」</div>
+      <div class="ss-desc" style="line-height:1.8">代表早年与外部环境。泉水清冽，赋予了你一种天然的清冷感与精神洁癖，在人群中总能保持清醒客观的局外人视角，不愿同流合污。</div>
+    </div>
+    <div class="ss-col">
+      <div class="ss-col-title" style="color:var(--metal)">月柱 癸酉 ·【剑锋金】</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「剑锋金者，白帝司权，刚健凌云，非水不能生。」</div>
+      <div class="ss-desc" style="line-height:1.8">隐藏在温和水面之下，是极其锐利的锋芒。这说明你内在拥有极强的原则性与执行力，一旦触碰底线，便会展现出剑出逢喉的决断力。</div>
+    </div>
+    <div class="ss-col">
+      <div class="ss-col-title" style="color:var(--fire)">日柱 甲辰 ·【覆灯火】</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「覆灯火者，金盏光华，玉台吐艳，照日月不照之处。」</div>
+      <div class="ss-desc" style="line-height:1.8">代表核心真我与中年特质。身处金水之寒，你却是那一盏不灭的覆灯火。这意味着你有着牺牲自我照亮他人的悲悯情怀，是身边人的精神灯塔。</div>
+    </div>
+    <div class="ss-col">
+      <div class="ss-col-title" style="color:var(--wood)">时柱 己巳 ·【大林木】</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「大林木者，枝干撼风，柯条撑月，耸壑昂霄。」</div>
+      <div class="ss-desc" style="line-height:1.8">晚年与事业归宿的写照。历经风霜，早年的弱木最终长成了参天的大林木，代表着你最终能构建起庇护他人的生态体系与稳固基业。</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">肆</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">十神潜意识与性格：高压克制与深层智慧</div>
+      <div class="sec-en">TEN GODS & YIN-YANG DYNAMICS</div>
+      <!-- 【修正6】十神分布比例重写，与"官杀28%+印20%+财25%+木18%+火7%"的五行总量保持一致 -->
+      <div class="sec-intro">将地支藏干的所有隐秘能量悉数剥离，我们能看到你潜意识中最真实的十神驱动力比例。注意观察深藏于申金之中的壬水偏印——它是原局最低调却关键的暗中助力。</div>
+    </div>
+  </div>
+
+  <div class="tg-chart-box">
+    <div class="card-ti" style="margin-bottom:24px;color:var(--pb)">十神核心驱动力分布矩阵（满编十行 · 含藏干）</div>
+    <!-- 【修正7】官杀由原40%改为28%（申酉金实际权重），与五行金旺比例一致 -->
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--metal)">正官（阴金·酉）</div><div class="tg-sub">规矩/体制/顺从</div></div>
+      <div class="tg-track"><div class="tg-fill metal" style="width:18%"></div></div>
+      <div class="tg-pct">18%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--metal)">七杀（阳金·申）</div><div class="tg-sub">压力/权威/突破</div></div>
+      <div class="tg-track"><div class="tg-fill metal" style="width:10%"></div></div>
+      <div class="tg-pct">10%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--earth)">偏财（阳土·辰）</div><div class="tg-sub">大局/掌控/投资</div></div>
+      <div class="tg-track"><div class="tg-fill earth" style="width:15%"></div></div>
+      <div class="tg-pct">15%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--earth)">正财（阴土·己）</div><div class="tg-sub">落地/工资/安稳</div></div>
+      <div class="tg-track"><div class="tg-fill earth" style="width:10%"></div></div>
+      <div class="tg-pct">10%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--water)">正印（阴水·癸）</div><div class="tg-sub">传统/庇护/包容</div></div>
+      <div class="tg-track"><div class="tg-fill water" style="width:15%"></div></div>
+      <div class="tg-pct">15%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--water)">偏印（阳水·壬藏申）</div><div class="tg-sub">非标逻辑/玄学</div></div>
+      <div class="tg-track"><div class="tg-fill water" style="width:7%"></div></div>
+      <div class="tg-pct">7%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--wood)">比肩（阳木·甲）</div><div class="tg-sub">自我/独立/意志</div></div>
+      <div class="tg-track"><div class="tg-fill wood" style="width:10%"></div></div>
+      <div class="tg-pct">10%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--wood)">劫财（阴木·乙藏辰）</div><div class="tg-sub">竞争/操作/极端</div></div>
+      <div class="tg-track"><div class="tg-fill wood" style="width:5%"></div></div>
+      <div class="tg-pct">5%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label" style="color:var(--fire)">食神（阳火·丙藏巳）</div><div class="tg-sub">才华/创意/技术</div></div>
+      <div class="tg-track"><div class="tg-fill fire" style="width:7%"></div></div>
+      <div class="tg-pct">7%</div>
+    </div>
+    <div class="tg-row">
+      <div class="tg-label-wrap"><div class="tg-label empty">伤官（阴火）</div><div class="tg-sub">颠覆/清高/反叛</div></div>
+      <div class="tg-track"><div class="tg-fill empty" style="width:0%"></div></div>
+      <div class="tg-pct empty">0%</div>
+    </div>
+
+    <div style="margin-top:20px;padding-top:20px;border-top:1px dashed rgba(90,184,108,0.15)">
+      <strong style="color:var(--pb);font-size:0.95rem;display:block;margin-bottom:12px;font-family:'Noto Sans SC',sans-serif;">十神极化深度剖析</strong>
+      <p style="font-size:0.86rem;line-height:2;color:rgba(230,250,235,0.85);font-weight:300;margin-bottom:8px"><strong>1. 官杀(28%) 的高压底色：</strong>金气旺盛（申金七杀+酉金正官），天生具备极强的"自律性与规则感"。你对外界的评价和自身的责任非常看重，能在极其严苛的体制或高压竞争中生存，但极易自我苛责，需要通过印星主动化解。</p>
+      <p style="font-size:0.86rem;line-height:2;color:rgba(230,250,235,0.85);font-weight:300;margin-bottom:8px"><strong>2. 印星(22%) 的化解智慧：</strong>包含了癸水正印（月干透出）与申金暗藏的壬水偏印（虽弱但存在）。面对官杀的重压，你不靠武力反抗，而是依靠"学习、包容、乃至非标的哲学逻辑"去化解危机。你有着出色的理解力与善良的底色。</p>
+      <p style="font-size:0.86rem;line-height:2;color:rgba(230,250,235,0.85);font-weight:300;margin-bottom:0"><strong>3. 财星(25%) 的现实落地：</strong>辰己土并存，你的价值观非常务实落地。你懂得如何整合资源，绝不空谈理想。你是一个极其稳重且具有长远规划的现实主义者。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 新增章节：食神泄秀·才华密码 ══ -->
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">伍</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">食神泄秀·才华密码与天赋赛道</div>
+      <div class="sec-en">FOOD GOD · TALENT & CREATIVE EXPRESSION</div>
+      <div class="sec-intro">《子平真诠》云：「食神主寿，又主财，其性善而有福，秀气之所聚也。」时支巳火藏丙，食神深藏为用——这是你整个命局中最宝贵的"精华出口"，深度解码它，才能找到你能量爆发最顺畅的那条轨道。</div>
+    </div>
+  </div>
+
+  <div class="yixiu-box">
+    <div class="yixiu-ti">食神深藏的深层含义</div>
+    <p style="font-size:0.94rem;line-height:2.3;color:rgba(230,250,235,0.88);font-weight:300;margin-bottom:14px">巳火食神深藏于时支，不透天干，是一种<strong>内蕴型才华</strong>。你的创造力与表达欲，并非那种一眼外露的张扬型，而是需要特定的触发条件才会喷涌而出。在内有压力（官杀重时）、外有支持（印星护持时）的双重条件下，这股火才会燃得最旺。</p>
+    <p style="font-size:0.94rem;line-height:2.3;color:rgba(230,250,235,0.88);font-weight:300;margin-bottom:0">更关键的是，食神为"甲木泄秀于火"：日主的精华，向外流淌、化作光与热。这意味着你的最佳表达状态，是将自己的知识、洞察和智慧，通过<strong>教导、创作、呈现、讲述</strong>的方式输出给他人——每一次真诚的输出，都是你补充能量、制约官杀压力的自我修复仪式。</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0">
+    <div class="ss-item" style="border-color:rgba(232,108,79,0.3)">
+      <div class="ss-name" style="color:var(--fire)">口才 / 表达天赋</div>
+      <div class="ss-rule">食神主"说话中听"，甲木赋予力度感。</div>
+      <div class="ss-desc">你的表达有天然的说服力与分量感。即便话不多，开口必有深度。在需要演讲、谈判、或以一对多的场合，你具备让听众不由自主倾听的气场。</div>
+    </div>
+    <div class="ss-item" style="border-color:rgba(232,108,79,0.3)">
+      <div class="ss-name" style="color:var(--fire)">文字 / 创作天赋</div>
+      <div class="ss-rule">食神主文采，巳中暗火如研墨。</div>
+      <div class="ss-desc">写作或内容创作是你天然的解压出口。特别是以法律、社会议题、哲学思辨为底色的输出，极易引发共鸣，你的文字带有一种叫人无法忽视的独立视角。</div>
+    </div>
+    <div class="ss-item" style="border-color:rgba(232,108,79,0.3)">
+      <div class="ss-name" style="color:var(--fire)">研究 / 解构天赋</div>
+      <div class="ss-rule">食神制杀，主善于拆解复杂问题。</div>
+      <div class="ss-desc">你有将复杂议题抽丝剥茧的本能——无论是学术研究、案例剖析还是政策解读，你的大脑天生擅长把庞大系统化为清晰逻辑链，这正是优秀法务与学者的共同特质。</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(232,108,79,0.2)">
+    <div class="card-ti" style="color:var(--fire)">才华触发条件：何时最能进入心流？</div>
+    <p>食神深藏，有特定的激活路径：当你处于<strong>【火木流年/大运】</strong>期间（如2026丙午年），丙火得令，食神应期透出，你的创作力、思维速度与表达欲将比平时提升数倍，此时提笔写作、参加演讲、拍摄内容，产出质量会令自己意外。</p>
+    <p>反之，在<strong>【土金流年】</strong>重压期间（如现阶段），食神被压制，你会感到无法进入状态、灵感断流。<strong>破解方法：此时不要强逼自己"输出"，而是主动"输入"——大量阅读（印星补给）才是在静候食神苏醒前最有价值的事。</strong></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">陆</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">神煞全景与大盘锚点：潜伏的才华与羁绊</div>
+      <div class="sec-en">DIVINE STARS & ELEMENTAL CLASHES</div>
+      <div class="sec-intro">神煞是对原局能量的精细标注，而干支的冲合则是引动人生剧烈变化的扳机。不懂冲合，便无法洞悉命运的转折点。本节严格依循古法排列，全面拆解原局神煞密码。</div>
+    </div>
+  </div>
+
+  <div class="dishi-grid">
+    <div class="ss-col" style="border-color:rgba(208,214,223,0.3)">
+      <div class="ss-col-title" style="color:var(--metal)">年柱 甲申 · 祖辈宫</div>
+      <div class="ss-rule">查法所得：天医、学堂、正学堂。</div>
+      <div class="ss-desc" style="font-size:0.8rem;line-height:1.8">申金之中，暗藏着医学与理学的启蒙。天医代表你对健康、玄学或修复类事物有天然直觉；双学堂落于年柱，主早年悟性极高，能在传统教育体系中展现出先发优势。</div>
+    </div>
+    <div class="ss-col" style="border-color:rgba(96,168,240,0.3)">
+      <div class="ss-col-title" style="color:var(--water)">月柱 癸酉 · 兄弟宫</div>
+      <!-- 【修正8】删除"四大空亡"神煞——甲辰旬中空寅卯，酉在旬内不空亡，此项不成立 -->
+      <div class="ss-rule">查法所得：国印、咸池（正桃花）、破碎、飞刃、流霞。</div>
+      <div class="ss-desc" style="font-size:0.8rem;line-height:1.8">此宫最为复杂。【国印】代表掌权与公信力，利于体制；【咸池】即正桃花，落正官，主端庄魅力；然带有【飞刃】与【破碎】，说明在青年期或职场早期，常遭遇暗流、竞争摩擦，需以极高情商化解。</div>
+    </div>
+    <div class="ss-col" style="border-color:rgba(196,176,148,0.5)">
+      <div class="ss-col-title" style="color:var(--earth)">日柱 甲辰 · 夫妻宫</div>
+      <div class="ss-rule">查法所得：金舆、华盖、墓杀、地网、大败、兼刃。</div>
+      <div class="ss-desc" style="font-size:0.8rem;line-height:1.8">【金舆】主中晚年出入体面、财富丰厚；【华盖】主思想深邃、有孤独感。虽带【大败/地网】等煞，提醒你在亲密关系与中年投资中，不可盲目冒进，宜守成、重精神契合。</div>
+    </div>
+    <div class="ss-col" style="border-color:rgba(232,108,79,0.3)">
+      <div class="ss-col-title" style="color:var(--fire)">时柱 己巳 · 子女宫</div>
+      <div class="ss-rule">查法所得：天厨、文昌、穷煞、孤辰、劫煞、地网、金神、吞陷煞、勾煞。</div>
+      <div class="ss-desc" style="font-size:0.8rem;line-height:1.8">晚年福报所在。【文昌】与【天厨】并临，主晚年享受文化与智慧的硕果。虽煞星环绕，但巳中暗藏第一用神丙火，且【金神】主刚毅，意味着你在晚年依然保有极强的威严与不可侵犯的领地。</div>
+    </div>
+  </div>
+
+  <div class="ss-grid" style="grid-template-columns:repeat(4,1fr);margin:24px 0">
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--metal)">咸池桃花 (酉)</div>
+      <div class="ss-rule">成因：「申子辰见酉为桃花」。且落于月令正官。</div>
+      <div class="ss-desc">月令正官带桃花，代表你的魅力非常端庄、正统，容易在职场或正式社交场合吸引高层次的目光。这是一种克制且带有距离感的吸引力。</div>
+    </div>
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--fire)">文昌贵人 (巳)</div>
+      <div class="ss-rule">成因：「甲木见巳为文昌」。落在时支。</div>
+      <div class="ss-desc">逢凶化吉的智慧之星。主聪明过人、气质文雅，赋予了你极强的学习与表达能力，越到晚年，越能依靠才华与学识赢得尊重。</div>
+    </div>
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--metal)">驿马动星 (申)</div>
+      <div class="ss-rule">成因：申为申子辰局驿马。</div>
+      <div class="ss-desc">年支申金属驿马之气，早年易有走动、离家或求学变迁的经历。这种动荡的底色让你比同龄人更早成熟，也具备跨国/异地发展的底层冲劲。</div>
+    </div>
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--earth)">金舆贵人 (辰)</div>
+      <div class="ss-rule">成因：「甲日见辰为金舆」。</div>
+      <div class="ss-desc">金舆意为黄金车马。落在日柱偏财库，主中晚年出入有排场，生活体面优裕，且能得到伴侣在物质上的较大助力。</div>
+    </div>
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--earth)">华盖星 (辰)</div>
+      <div class="ss-rule">成因：「申子辰见辰为华盖」。</div>
+      <div class="ss-desc">主思想深邃、清高孤傲。这说明你的精神世界极其丰富，容易对哲学、玄学或艺术产生浓厚兴趣，但同时也容易在亲密关系中感到孤独。</div>
+    </div>
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--metal)">飞刃 / 破碎 (酉)</div>
+      <div class="ss-rule">成因：「冲羊刃者为飞刃」。</div>
+      <div class="ss-desc">潜伏的锐利与暗流。平时温文尔雅，但面对不公或触犯底线之事时，会爆发出一针见血的批判力；也暗示早年易有意外小磕碰。</div>
+    </div>
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--fire)">金神 (巳)</div>
+      <div class="ss-rule">成因：「己巳为金神」。</div>
+      <div class="ss-desc">金神主刚毅果决，不可犯其怒。时支暗藏的这种杀伐决断，意味着在关键时刻（或事业晚期），你具备极强的反击能力与手腕。</div>
+    </div>
+    <!-- 【修正9】将原"四大空亡(酉)"替换为正确成立的贵人星 -->
+    <div class="ss-item">
+      <div class="ss-name" style="color:var(--water)">天乙贵人 (丑/未)</div>
+      <div class="ss-rule">成因：「甲戊庚见牛羊（丑未）为贵人」。</div>
+      <div class="ss-desc">天乙贵人是最强的逢凶化吉之星。命主甲年生，贵人在丑未两支。当流年或大运走到丑未（如2027丁未大运起始年），将迎来关键贵人相助，逢难皆有人救场。</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">柒</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">原局核心交锋与流年合冲预警</div>
+      <div class="sec-en">ELEMENTAL CLASHES & ANNUAL ALERTS</div>
+      <div class="sec-intro">命运的转折，往往由地支的冲合刑害所引动。本节深度剖析原局交锋，并预演未来流年的关键节点。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-ti">原局底层逻辑：合与刑的博弈</div>
+    <div style="background:rgba(5,10,6,0.4);border:1px solid rgba(208,214,223,0.2);padding:16px;border-radius:6px;margin-bottom:12px">
+      <strong style="color:var(--metal);font-size:0.95rem;display:block;margin-bottom:8px;font-family:'Noto Sans SC',sans-serif;">⚔️ 辰酉六合（职场情商的极致展现）</strong>
+      <p style="font-size:0.85rem;color:rgba(230,250,235,0.8);line-height:1.8">原局日支（辰土财星）去合月支（酉金官星）。财去生官且相合，代表你极善于处理世俗人际关系，懂得用现实的资源去铺垫地位与名誉。你在职场上绝非只会死磕的书呆子，而是情商极高，善于暗中整合资源、将大事化小的聪明人。</p>
+    </div>
+    <div style="background:rgba(5,10,6,0.4);border:1px solid rgba(232,108,79,0.2);padding:16px;border-radius:6px;margin-bottom:12px">
+      <strong style="color:var(--fire);font-size:0.95rem;display:block;margin-bottom:8px;font-family:'Noto Sans SC',sans-serif;">🔥 申巳相刑（理智与才华的深层拉扯）</strong>
+      <p style="font-size:0.85rem;color:rgba(230,250,235,0.8);line-height:1.8">年支申金与时支巳火遥相刑合，也是食神（才华）与七杀（权威）的博弈。这意味着你内心时常有自我矛盾：既想依靠才华反叛世俗（巳），又不得不顾及体制的责任与权威（申）。这股张力会在特定年份被引爆。</p>
+    </div>
+    <div style="background:rgba(5,10,6,0.4);border:1px solid rgba(196,176,148,0.2);padding:16px;border-radius:6px;">
+      <strong style="color:var(--earth);font-size:0.95rem;display:block;margin-bottom:8px;font-family:'Noto Sans SC',sans-serif;">🌱 甲己合土（脚踏实地的结果导向）</strong>
+      <p style="font-size:0.85rem;color:rgba(230,250,235,0.8);line-height:1.8">日干甲木合时干己土（中正之合）。这赋予了你极其务实的价值观。你不喜欢虚无缥缈的大饼，一切行动最终都要指向"落地生根、财富入库"的实质结果。</p>
+    </div>
+  </div>
+
+  <div class="rt-timeline">
+    <div class="rt-title" style="color:var(--pb)">合冲引动与太岁时间线预警 (2025–2035)</div>
+    <div class="quote" style="margin-top:0">太岁（流年地支）如同触媒，一旦与原局发生冲、刑、合，必生变局。预判风向，方能顺势而为。</div>
+    <div class="rt-items">
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2025年 · 乙巳年 <span class="rt-tag hot">寅巳申三刑 (太岁刑合)</span></div>
+          <div class="rt-gz">巳火太岁引动 · 岁运并刑</div>
+          <div class="rt-desc">流年【巳】火，与原局【申】构成寅巳申无恩之刑（需流年寅字引动，若无寅则为巳申相刑），且流年天干乙木透出。这一年人际关系、法律文书、签证合约极易出现反反复复的拉扯，事情往往"先难后易"。凡事多留备份，切勿急躁冲动。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2028年 · 戊申年 <span class="rt-tag" style="background:rgba(208,214,223,0.18);color:#D0D6DF;border:1px solid rgba(208,214,223,0.4)">本命年值太岁 (高危预警)</span></div>
+          <div class="rt-gz">申金七杀 · 太岁并临并引动申巳刑</div>
+          <div class="rt-desc">不仅逢本命年，流年【申】金并临原局年柱，强势引动【申巳刑】。且土金极旺，克制印星！这一年是人生底盘的大洗牌之年，学业、职场或感情必有一次极其彻底的压力释放或断舍离。<strong>此年宜主动置业、献血化煞、置之死地而后生。</strong></div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2030年 · 庚戌年 <span class="rt-tag hot">冲日支夫妻宫/财库</span></div>
+          <div class="rt-gz">戌土冲辰土 · 冲动财库</div>
+          <div class="rt-desc">流年地支【戌】强势冲动日支【辰】（辰戌相冲）。辰为夫妻宫，也为财库。这一年必有<strong>感情格局的大变动</strong>（单身者闪恋，恋爱者面临结婚或分手抉择），同时伴随<strong>大笔资金的进出</strong>（如买房、大额投资落地）。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2034年 · 甲寅年 <span class="rt-tag hot">冲年支驿马 (冲太岁)</span></div>
+          <div class="rt-gz">寅木冲申金 · 岁破大动</div>
+          <div class="rt-desc">流年地支【寅】冲克年支【申】。申为驿马，驿马逢冲，一跃千里！加上天干甲木比肩相助，这是<strong>彻底脱离原有环境、跨国发展、或事业地理版图大跃迁</strong>的决定性年份。动则大吉。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot mid"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2035年 · 乙卯年 <span class="rt-tag warm">冲月令官星</span></div>
+          <div class="rt-gz">卯木冲酉金 · 羊刃冲官</div>
+          <div class="rt-desc">流年【卯】木冲克月令【酉】金。羊刃冲正官，代表在职场上勇敢对抗不公或僵化的体制，有脱离舒适圈、自立门户或事业实现重大层级突破之象，但需提防职场人事洗牌的余波。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">捌</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">学业跃迁与低谷破局：体制智慧与海外契机</div>
+      <div class="sec-en">ACADEMIC JOURNEY & STUDY DYNAMICS</div>
+      <div class="sec-intro">《渊海子平》：「印旺逢官，必主科甲连登。」官印相生格，天生具备在传统学术体系内深耕的潜质。但忌土生金（财破印），逢此类流年学业必受阻滞。</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(122,222,148,0.3)">
+    <div class="card-ti" style="color:var(--wood)">极高的学历天花板与专业方向</div>
+    <p>原局官杀当令，压力巨大，但癸水印星透干化杀，加上双学堂与文昌贵人加持，你的学习能力是建立在"解决问题"和"应对高压"之上的。你不是死读书的类型，而是能将知识转化为应对现实压力的武器。</p>
+    <p><strong>学历断言：</strong>你在正规体制内的学历晋升通道较为顺畅。完全具备考取国内知名高校研究生/法本/体制内核心编制的实力。只要稳住心态，利用水之印星化解压力，必有所成。</p>
+  </div>
+
+  <div class="card" style="border-color:rgba(196,176,148,0.3)">
+    <div class="card-ti" style="color:var(--earth)">法考停滞与低谷剖析：顺应流年，转战实习</div>
+    <p>近期法考备考让你感到痛苦、停滞。这绝非代表你与法律行业存在排斥，而是极其清晰的"流年低谷效应"！</p>
+    <p><strong>底层命理剖析：</strong>目前（如2024甲辰年），辰为湿土，是命局的偏财星。流年之土强势生助原局的申酉金（官杀），导致精神压力剧增；更关键的是，土会克制你赖以生存的癸水（印星，代表学习、考试、证书），这在命理上称为<strong>【财星破印】</strong>。因此，这段时间你在学业上感到思绪阻塞、极度煎熬，完全符合运势规律。</p>
+    <p style="color:var(--pb);font-weight:500;margin-top:12px">◆ 破局实操指南：</p>
+    <p>在"财破印"的周期，硬磕考试往往事倍功半。既然流年走财运（财代表现实工作、变现、人际），<strong>你适合暂时放下死磕法考的执念，顺应运势转去寻找一份含金量高的实习或兼职。</strong>在工作实践中积累经验（主动应掉耗财之象），等待运势转暖（如2025、2026木火流年），再回头一举拿下证书，阻力将大大减小。</p>
+  </div>
+
+  <div class="rt-timeline">
+    <div class="rt-title" style="color:var(--pb)">学业跃迁与出国契机时间线</div>
+    <div class="quote" style="margin-top:0">关于出国：年支申金带驿马动气，且水为喜用（主海外、流动），你完全具备向外探索的格局。"先做涉外法务，再寻找机会出国"是一条极具战略眼光的路径（用印星的积累去触发驿马）。</div>
+    <div class="rt-items">
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2026年 · 丙午年 <span class="rt-tag hot">才华突围·留学黄金窗口</span></div>
+          <div class="rt-gz">丙火食神 · 午火伤官</div>
+          <div class="rt-desc">第一用神【火】强势降临！木火通明，一扫前两年的阴霾与压抑。思维极度敏捷，阻力极小。此年极其适合冲刺法考、雅思托福，或直接提交海外留学申请，是出国阻力最小的绝佳节点。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot mid"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2027年 · 丁未年 <span class="rt-tag warm">沉淀落地期 · 天乙贵人引动</span></div>
+          <div class="rt-gz">丁火伤官 · 未土（天乙贵人年）</div>
+          <div class="rt-desc">未土为木之库，且未为命主天乙贵人所在！前期在学业、留学申请上的激烈筹备，在这一年将顺利落地，收到满意的Offer，且有贵人全力护航，确立最终的学术或职业方向。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2031-2032年 · 辛亥/壬子年 <span class="rt-tag" style="background:rgba(96,168,240,0.18);color:#E1F0F0;border:1px solid rgba(96,168,240,0.4)">印星爆发出国期</span></div>
+          <div class="rt-gz">水木齐至 · 大运交接</div>
+          <div class="rt-desc">流年印星大爆发。若是选择先工作后出国，这个时间段大运切换，水气极旺（主海外），无论是出国读硕博深造还是跨国工作外派，都将如鱼得水。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">玖</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">事业板块：律师与法务的博弈，及破圈赛道</div>
+      <div class="sec-en">CAREER STRATEGY & VALUE CREATION</div>
+      <div class="sec-intro">《子平真诠》云：「杀印相生，权当万里。」原局官印相生与辰酉暗合的特质，决定了你并非单打独斗的孤狼，而是善借平台之势的操盘手。</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(96,168,240,0.3)">
+    <div class="card-ti" style="color:var(--water)">如果留在法律行业：律师 vs 法务？</div>
+    <p><strong>结论：你更适合"法务/合规/风控"路线，长远来看优于纯诉讼律师。</strong></p>
+    <p><strong>命理深剖：</strong>独立执业律师或纯诉讼律师，往往需要极强的【伤官】来主动发起进攻、在庭审中唇枪舌剑。而你的命局是正统的【官印相生】加【辰酉六合】。印星代表规则的守护者、文本的审核者与风险的化解者；六合代表你非常擅长平衡各方利益、在既定规则内长袖善舞，将大事化小。因此，在大型跨国企业、互联网大厂或国企担任<strong>涉外法务、合规官、风控专家</strong>，最能发挥你运筹帷幄、防患于未然的天赋，这也是你事业成就最稳健、天花板最高的主干道。</p>
+  </div>
+
+  <div class="card" style="border-color:rgba(232,108,79,0.3)">
+    <div class="card-ti" style="color:var(--fire)">除了法律，还有哪些适合长期发展的行业？</div>
+    <p>基于你的核心喜用神（水化杀，火调候泄秀），你的职业方向可分为两条辅助赛道：</p>
+    <ul class="strat-list">
+      <li><strong>🥇 追求成就与地位（深耕官印体系）：</strong>
+        <br>若跳出法律，你非常适合<strong>大型平台的人力资源统筹（HRBP）、行政高管、政府监管部门、或是高校/研究机构的行政学术岗</strong>。这些领域能最大化利用你应对复杂体制的高超情商与危机化解能力，享受稳定与尊严。
+      </li>
+      <li><strong>🥈 追求自由与舒适（利用食神调候生财）：</strong>
+        <br>如果你感到体制内过于压抑，想要更舒适自由的发展，可以转用时支的"丙火食神"。适合<strong>高级教育咨询、心理疗愈、高端涉外商务/跨国供应链（结合申金驿马）、或者内容策划出海</strong>。这类工作能释放你的创造力与沟通欲（火），且不被死板规矩（金）所束缚，身心更加愉悦。
+      </li>
+    </ul>
+  </div>
+
+  <div class="rt-timeline">
+    <div class="rt-title" style="color:var(--pb)">当前事业学业节奏建议</div>
+    <div class="quote" style="margin-top:0">Q: 现在是需要以拿证/读书为主，还是可以去工作变现？<br>A: 原局以【印星（学历/证书）】为化解官杀压力的终极护身符。长远战略<strong>必须</strong>以拿证读书为主。但短期战术上（今明两年财星破印），适宜先工作变现、积累实习经验，避开考试低谷期。</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">地理风水与全球择城：避开内耗，寻找火木</div>
+      <div class="sec-en">DOMESTIC & INTERNATIONAL GEOGRAPHIC STRATEGY</div>
+      <div class="sec-intro">在长期工作和生活的城市选择上，方位直接决定了你的内耗程度。你问哪个地理方向更利于事业和财运？答案藏在五行的生克之中。</div>
+    </div>
+  </div>
+
+  <div class="map-module">
+    <div class="map-text">
+      <h3 style="color:var(--water)">🌏 核心城市选择策略</h3>
+      <p>细致甄别五行地气，切勿被表象误导：</p>
+      <div class="city-tags">
+        <div class="city-tag fire-tag anchor" data-text="<strong style='color:#F0E1E1'>🔴 东南/南方 (火木之地) · 事业财运最高上限</strong><br><br>代表：长三角（江浙沪）、大湾区（广深）。<br><br>东方属木（帮身），南方属火（第一调候用神）。若追求事业的成就上限、高薪变现与个人才华的彻底释放，去东南沿海或南方城市，将极大制约命局的寒冷与官杀压抑，迎来大发。这是最优解。">
+          🔴 东南/南方 (如江浙沪/广深) — 事业财运最优爆发区
+        </div>
+        <div class="city-tag anchor" style="background:rgba(96,168,240,0.15);border:1px solid rgba(96,168,240,0.4);color:#E1F0F0" data-text="<strong style='color:#60A8F0'>🔵 偏水之地 · 稳定与庇护</strong><br><br>代表：天津（金水交加）、大连、青岛等沿海。<br><br>注意：北京虽处北方，但作为皇城根基，实为厚重之【戊土与庚金】（土金为忌），去北京反易加重你的事业内耗与规矩压抑。若想在北方发展，天津带水略优于北京。真正能润泽你的，是沿海或更偏东的水木交界地带，利于求学与求稳。">
+          🔵 偏水之地 (如天津/沿海) — 稳定与体制庇佑 (避开北京厚土)
+        </div>
+        <div class="city-tag anchor" style="background:rgba(208,214,223,0.15);border:1px solid rgba(208,214,223,0.4);color:#D0D6DF" data-text="<strong style='color:#D0D6DF'>⚪ 西方 (忌地) · 高压深渊</strong><br><br>西部内陆、川渝等地。<br><br>金气极其旺盛，会极大加剧你的生存压力、竞争内耗与责任重担，非必要尽量避免长居。">
+          ⚪ 西方 — 竞争内耗加剧，尽量避开
+        </div>
+      </div>
+    </div>
+
+    <div class="map-svg-container">
+      <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block" role="img" aria-label="中国地图，标注命主喜用城市">
+        <rect width="440" height="380" fill="#0A0B0E"/>
+        <radialGradient id="seaGrad" cx="60%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#0A100C" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#050A06" stop-opacity="1"/>
+        </radialGradient>
+        <rect width="440" height="380" fill="url(#seaGrad)"/>
+        <path d="M228,124 L204,128 L194,140 L202,157 L207,215 L193,257 L167,287 L141,306 L106,319 L88,313 L60,340 L50,380 L0,380 L0,283 L0,154 L9,165 L26,144 L44,124 L62,103 L79,83 L114,62 L158,51 L190,41 L238,41 L280,41 L282,100 L264,118 L228,124 Z" fill="rgba(96,168,240,0.03)" stroke="rgba(96,168,240,0.2)" stroke-width="1.2" stroke-linejoin="round"/>
+        <g class="anchor" data-text="偏水之地，印星化杀">
+          <circle cx="170" cy="120" r="18" fill="rgba(96,168,240,0.08)"/>
+          <circle cx="170" cy="120" r="5" fill="#60A8F0" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+        </g>
+        <g class="anchor" data-text="南方/东方火木地，制杀调候">
+          <circle cx="141" cy="305" r="5" fill="#E86C4F" stroke="rgba(232,108,79,0.7)" stroke-width="1.2"/>
+          <circle cx="206" cy="220" r="5" fill="#7ADE94" stroke="rgba(122,222,148,0.7)" stroke-width="1.2"/>
+        </g>
+        <g class="anchor" data-text="西方金地，压力内耗">
+          <circle cx="80" cy="200" r="4.5" fill="rgba(208,214,223,0.65)" stroke="rgba(208,214,223,0.4)" stroke-width="0.8"/>
+        </g>
+        <text x="180" y="124" font-family="Noto Sans SC, sans-serif" font-size="10" fill="rgba(96,168,240,0.95)" font-weight="500">津/沿海(水)</text>
+        <text x="151" y="309" font-family="Noto Sans SC, sans-serif" font-size="9" fill="rgba(232,108,79,0.85)">大湾区(火)</text>
+        <text x="216" y="224" font-family="Noto Sans SC, sans-serif" font-size="9" fill="rgba(122,222,148,0.85)">江浙沪(木)</text>
+        <text x="90" y="204" font-family="Noto Sans SC, sans-serif" font-size="9" fill="rgba(208,214,223,0.6)">西方(金)</text>
+        <style>
+          @keyframes map-pulse{0%,100%{opacity:0.3}50%{opacity:0.7}}
+          .pulse-ring{animation:map-pulse 2.2s ease-in-out infinite;transform-origin:141px 305px}
+        </style>
+        <circle class="pulse-ring" cx="141" cy="305" r="16" fill="none" stroke="rgba(232,108,79,0.4)" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾壹</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">情缘与健康：性向底色与双刃剑效应</div>
+      <div class="sec-en">ROMANCE, HEALTH & RISK MITIGATION</div>
+      <div class="sec-intro">因为你极度在意事业与财运，我们必须精准识别感情与健康这两个可能带来负面牵扯的"雷区"，提前布防。</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(122,222,148,0.3)">
+    <div class="card-ti" style="color:var(--wood)">性向底色与慕强心理（智性恋特质）</div>
+    <p>探讨感情之前，必须先看透你命理层面的亲密取向。甲木身为纯阳之大树，扎根财库，且原局金（官杀，传统上代表男性或权威）极为旺盛但为忌神。这意味着什么？</p>
+    <p>这意味着你在潜意识的亲密关系取向中，具有极强的<strong>慕强与智性恋（Sapiosexual）特质</strong>，甚至带有一丝超脱性别的泛性向底色。你内心极为独立傲骨，极难对能力平庸、企图用传统大男子主义规训你的人产生真正的仰慕。你渴望的不是从属，而是被绝对的业务能力、高维的认知、或能给予你如癸水印星般无限包容的灵魂所深深折服。只要对方在精神和能力上足够强大，能与你并肩作战，性别的界限对你而言并不绝对。</p>
+  </div>
+
+  <div class="romance-diagram">
+    <div class="romance-box" style="border-color:rgba(232,108,79,0.4);background:rgba(232,108,79,0.04)">
+      <div class="romance-box-ti" style="color:var(--fire)">感情对事业的负面影响警报</div>
+      <p><strong>会影响吗？会。</strong>由于金（官杀/伴侣星）是你的忌神，如果过度沉溺于消耗型的感情，对方极可能给你带来巨大的精神压力、甚至试图控制你的事业节奏。特别是在土金旺的年份（如2028戊申年、2029己酉年、2030庚戌年冲夫妻宫），感情极易发生剧烈动荡，这种情绪内耗会直接拖垮你的事业进度。<strong>防范策略：</strong>在这些高危年份，务必坚持"事业第一"的原则，保持物理距离（异地恋）是最佳的化解方式。</p>
+    </div>
+    <div class="romance-box" style="border-color:rgba(208,214,223,0.4);background:rgba(208,214,223,0.04)">
+      <div class="romance-box-ti" style="color:var(--metal)">健康警报与调护防线</div>
+      <p>《黄帝内经》云，木主肝胆，金主肺骨。原局金旺克木（木受损），这意味着你在高压的官杀运势下，极易出现肝气郁结、偏头痛、颈椎劳损或睡眠质量下降。<strong>负面影响：</strong>身体一旦亮红灯，将直接导致你无法负荷高强度的竞争。<strong>减轻策略：</strong>日常切忌长期熬夜或压抑负面情绪。多亲近自然草木，适量进行拉伸等柔性运动；多饮用温热茶水，用【火与水】的能量来温养受损的甲木，保重身体即是保住事业的本钱。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾贰</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">大运流年：逆行推演与南方大发</div>
+      <div class="sec-en">LUCK PILLARS & ANNUAL FORTUNE</div>
+      <div class="sec-intro">阳年女命，大运逆排。早年金水淬炼，中年步入南方火地制杀，这是一条典型的「先苦后甜、大器晚成」的轨迹。</div>
+    </div>
+  </div>
+
+  <div class="dayun-info-bar">
+    <div class="di-item">
+      <span class="di-label">当前大运</span>
+      <span class="di-val">辛未大运（2019—2028年）</span>
+    </div>
+    <span class="di-sep">✦</span>
+    <div class="di-item">
+      <span class="di-label">核心气场</span>
+      <span class="di-val">正官坐财库，高压沉淀期</span>
+    </div>
+    <span class="di-sep">✦</span>
+    <div class="di-item">
+      <span class="di-label">贵人年份</span>
+      <span class="di-val">2027丁未年（天乙贵人引动）</span>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">大运势能折线图 · 中晚年火地巅峰</div>
+    <div class="chart-inner">
+      <canvas id="fortuneChart" role="img" aria-label="命主整体运势轨迹折线图"></canvas>
+    </div>
+  </div>
+
+  <div class="yun-grid">
+    <div class="yun-card">
+      <div class="yun-age">约5岁起运</div>
+      <div class="yun-stem"><span class="c-water">壬</span><span class="c-metal">申</span></div>
+      <div class="yun-desc">2009-2018：偏印坐七杀。官杀极旺，早年学业竞争压力巨大，环境较为动荡（驿马）。</div>
+    </div>
+    <div class="yun-card current">
+      <div class="yun-age">15岁大运</div>
+      <div class="yun-stem"><span class="c-metal">辛</span><span class="c-earth">未</span></div>
+      <div class="yun-desc">2019-2028：<strong>当前大运！</strong>正官坐财库。财星破印，法考停滞低谷期，宜在规矩中逐步沉淀学识，转寻实习以应耗财之象。</div>
+    </div>
+    <div class="yun-card">
+      <div class="yun-age">25岁大运</div>
+      <div class="yun-stem"><span class="c-metal">庚</span><span class="c-fire">午</span></div>
+      <div class="yun-desc">2029-2038：七杀坐伤官。<strong>火炼秋金！</strong>调候第一用神发力，能力大幅提升，凭借才华与手腕掌控实权，事业迎来质的飞跃。</div>
+    </div>
+    <div class="yun-card">
+      <div class="yun-age">35岁大运</div>
+      <div class="yun-stem"><span class="c-earth">己</span><span class="c-fire">巳</span></div>
+      <div class="yun-desc">2039-2048：正财坐食神。食神制杀生财，事业稳步扩张，地位与财富极速上升的黄金十年。</div>
+    </div>
+    <div class="yun-card">
+      <div class="yun-age">45岁大运</div>
+      <div class="yun-stem"><span class="c-earth">戊</span><span class="c-earth">辰</span></div>
+      <div class="yun-desc">2049-2058：偏财干支一气。财富彻底爆发入库，掌控庞大资源，达至一生顶点，唯需注重防病。</div>
+    </div>
+    <div class="yun-card">
+      <div class="yun-age">55岁大运</div>
+      <div class="yun-stem"><span class="c-fire">丁</span><span class="c-wood">卯</span></div>
+      <div class="yun-desc">2059-2068：伤官坐羊刃。根基极其稳固，功成名就，颐养天年。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 新增章节：贵人速查年历 ══ -->
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾叁</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">贵人速查年历·逢凶化吉的关键节点</div>
+      <div class="sec-en">NOBLE STAR GUIDE · ANNUAL FORTUNE ANCHORS</div>
+      <div class="sec-intro">贵人星是命盘中逢凶化吉的核心力量。提前识别贵人年份，便是提前布局的最强底牌。</div>
+    </div>
+  </div>
+
+  <div class="guiren-grid">
+    <div class="guiren-card" style="border-color:rgba(196,176,148,0.4)">
+      <div class="guiren-ti" style="color:var(--earth)">天乙贵人 · 丑未年月日</div>
+      <div class="guiren-body">成因：「甲戊庚见丑未」。<br><br>
+      近期贵人年份：<strong style="color:var(--pb)">2027年丁未</strong>（力度最强，同时走贵人年与火运）、2031年辛亥（流月遇未）、未月（每年农历六月）。<br><br>
+      贵人出现时，遇到的困境往往会有贵人出手，签约、面试、谈判在此时机安排胜算极大。</div>
+    </div>
+    <div class="guiren-card" style="border-color:rgba(232,108,79,0.3)">
+      <div class="guiren-ti" style="color:var(--fire)">文昌贵人 · 巳年月日</div>
+      <div class="guiren-body">成因：「甲木文昌在巳」。原局时支即为文昌，代表终身护持。<br><br>
+      每逢流年/月走巳火（如<strong style="color:var(--pb)">2025乙巳年</strong>、每年四月/五月巳月），考试、论文答辩、面试表达能力激增，发挥远超平日水准。把重要测试安排在巳月，事半功倍。</div>
+    </div>
+    <div class="guiren-card" style="border-color:rgba(122,222,148,0.3)">
+      <div class="guiren-ti" style="color:var(--wood)">月德贵人 · 申月</div>
+      <div class="guiren-body">成因：「甲年生月德在申」。原局年支即为月德，代表祖辈余荫与化灾护身。<br><br>
+      每年申月（农历七月，约8月）是你的"自动消灾"档期。原本发酵中的麻烦往往在此月莫名化解，逢凶化吉概率最高，适合处理历史遗留的纠纷或重启被搁置的项目。</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(122,222,148,0.2);margin-top:8px">
+    <div class="card-ti">如何用好贵人能量：三步应用指南</div>
+    <p><strong>第一步 · 排期：</strong>将重要的面试、签约、谈判、考试，优先排在天乙贵人年份（2027丁未）、文昌月（巳月）、月德月（申月）。这不是迷信，而是在你自身能量最旺盛的档期主动出击。</p>
+    <p><strong>第二步 · 认人：</strong>贵人往往藏在属丑或属未的人身上（天乙贵人）。生活中遇到这类人，多加维护，因为你们之间的缘分往往带有逢凶化吉的底层能量。</p>
+    <p><strong>第三步 · 守株：</strong>在非贵人时期（如土金旺月），不必强行冲刺，做好基础工作、蓄积实力即可。"贵人来了就冲，贵人未至就守"是最省力的节奏。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾肆</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">甲辰日柱·人格密码深度解码</div>
+      <div class="sec-en">JIACHEN DAY PILLAR · PERSONALITY ARCHETYPE</div>
+      <div class="sec-intro">日柱是命盘中最能体现一个人内在气质与人格底色的核心坐标。甲辰日柱在六十甲子中位列第四十一位，是一种极为稳重且具备大盘思维的人格原型。</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-ti">甲辰日柱古典断语</div>
+      <div class="quote" style="font-size:1.05rem;text-align:center;line-height:2.5;letter-spacing:0.12em">
+        「甲木生辰是水局，财官印绶皆丰足；<br>
+        龙守财库真性情，稳步青云步步高。」
+      </div>
+      <p>甲辰日柱古有"龙守财库"之称。日主坐偏财（辰土）。「辰」为水之库，不仅能纳财，更能滋养甲木。此乃天生的稳健操盘手之格，不喜浮夸，自带威严。</p>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-ti">甲辰日的人格核心密码</div>
+      <p><strong style="color:var(--wood)">清醒的现实主义者：</strong>甲木合己土（甲己合），你对现实利益和结果导向有着极其清醒的认知。你绝不会被虚无缥缈的大饼所蒙蔽。</p>
+      <p><strong style="color:var(--earth)">极度可靠的底盘：</strong>辰土厚重，赋予了你极强的包容力与承载力。在团队或家庭中，你往往是那个最能抗事、最能兜底的核心人物。</p>
+      <p><strong style="color:var(--metal)">隐性的固执（墓杀）：</strong>虽然你外表圆融（辰酉合），但日支带墓杀，说明你内心认定的底线极其坚固，一旦触碰，绝不妥协。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾伍</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">用神忌神·生活实战速查手册</div>
+      <div class="sec-en">FAVORABLE & UNFAVORABLE ELEMENTS · LIFE APPLICATION GUIDE</div>
+      <div class="sec-intro">命理的终极意义在于落地应用。将抽象的五行能量转化为可在日常生活中直接调用的实战参数。</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+    <div style="background:rgba(5,10,6,0.88);border:1px solid rgba(232,108,79,0.35);border-radius:6px;padding:30px;backdrop-filter:blur(24px)">
+      <div class="card-ti" style="color:var(--fire);margin-bottom:20px">✅ 第一用神：火 (调候/制杀)</div>
+      <div style="margin-bottom:18px">
+        <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:var(--pb);margin-bottom:8px;font-weight:500">🎨 喜用颜色</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:rgba(232,108,79,0.15);border:1px solid rgba(232,108,79,0.4);font-size:0.78rem;color:#F0E1E1;font-family:'Noto Sans SC',sans-serif"><span style="width:10px;height:10px;background:#E86C4F;border-radius:50%;display:inline-block"></span>红橙紫暖色系（火）</span>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:var(--pb);margin-bottom:8px;font-weight:500">🔢 喜用数字</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span style="padding:6px 14px;border-radius:4px;background:rgba(232,108,79,0.15);border:1px solid rgba(232,108,79,0.35);font-size:0.82rem;color:#F0E1E1;font-family:'Noto Sans SC',sans-serif">2 · 7（火）</span>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:var(--pb);margin-bottom:8px;font-weight:500">🌍 日常调护</div>
+        <p style="font-size:0.82rem;line-height:1.8;color:rgba(230,250,235,0.85);font-weight:300">多晒太阳，保持居所明亮；学习做饭或烘焙（增加天厨与火气）；心情低落时可看喜剧或参与热烈的社交聚会。</p>
+      </div>
+    </div>
+    
+    <div style="background:rgba(5,10,6,0.88);border:1px solid rgba(96,168,240,0.35);border-radius:6px;padding:30px;backdrop-filter:blur(24px)">
+      <div class="card-ti" style="color:var(--water);margin-bottom:20px">✅ 第二辅用：水/木 (通关化杀)</div>
+      <div style="margin-bottom:18px">
+        <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:var(--pb);margin-bottom:8px;font-weight:500">🎨 喜用颜色</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:rgba(96,168,240,0.15);border:1px solid rgba(96,168,240,0.4);font-size:0.78rem;color:#E1F0F0;font-family:'Noto Sans SC',sans-serif"><span style="width:10px;height:10px;background:#60A8F0;border-radius:50%;display:inline-block"></span>黑蓝冷色系（水）</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:rgba(122,222,148,0.15);border:1px solid rgba(122,222,148,0.4);font-size:0.78rem;color:#E1F0E1;font-family:'Noto Sans SC',sans-serif"><span style="width:10px;height:10px;background:#7ADE94;border-radius:50%;display:inline-block"></span>绿色系（木）</span>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:var(--pb);margin-bottom:8px;font-weight:500">🔢 喜用数字</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span style="padding:6px 14px;border-radius:4px;background:rgba(96,168,240,0.15);border:1px solid rgba(96,168,240,0.35);font-size:0.82rem;color:#E1F0F0;font-family:'Noto Sans SC',sans-serif">1 · 6（水）</span>
+          <span style="padding:6px 14px;border-radius:4px;background:rgba(122,222,148,0.15);border:1px solid rgba(122,222,148,0.35);font-size:0.82rem;color:#E1F0E1;font-family:'Noto Sans SC',sans-serif">3 · 8（木）</span>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;color:var(--pb);margin-bottom:8px;font-weight:500">🌍 日常调护</div>
+        <p style="font-size:0.82rem;line-height:1.8;color:rgba(230,250,235,0.85);font-weight:300">多饮茶，亲近江河湖海；工位可放置水培绿植；通过阅读、写作或进修学习（水为印星）来化解现实的官杀焦虑。</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:rgba(5,10,6,0.88);border:1px solid rgba(208,214,223,0.25);border-radius:6px;padding:30px;backdrop-filter:blur(24px)">
+    <div class="card-ti" style="color:rgba(208,214,223,0.8);margin-bottom:20px">❌ 忌神 · 金/土 (加压内耗)</div>
+    <p style="font-size:0.82rem;line-height:1.8;color:rgba(230,250,235,0.7);font-weight:300">尽量减少穿戴大面积的<strong>白色、银色、灰色（金）</strong>及<strong>黄色、褐色（土）</strong>；避开数字<strong>4、9（金）</strong>与<strong>0、5（土）</strong>；尽量避免佩戴沉重的纯金属饰品；警惕职场中过度完美的强迫症（金之肃杀），学会适当放过自己。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾陆</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">六亲宫位·家庭关系图谱</div>
+      <div class="sec-en">SIX RELATIONS & FAMILY DYNAMICS</div>
+      <div class="sec-intro">四柱分别对应不同的六亲宫位，藏干中的十神能量是解读家庭关系的精密密码。</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+    <div class="card" style="margin-bottom:0;border-color:rgba(208,214,223,0.3)">
+      <div class="card-ti" style="color:var(--metal)">年柱 · 甲申 · 祖辈/父母宫</div>
+      <p><strong style="color:var(--wood)">父亲象（年干甲 = 比肩）：</strong>父亲个性强烈、有独立主见。在你的成长轨迹中，他更像是一位独立不群的"同行者"甚至无形较劲的对手，无形中激励了你更早去寻求自身的独立与自强。</p>
+      <p><strong style="color:var(--metal)">母亲象（年支申 = 七杀）：</strong>申金七杀深藏，带有天然的刚硬与肃杀之气。这代表母亲极可能是一位手腕强硬、管教极度严格的女性，在你早年生活中施加了较沉重的规训压力。</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-color:rgba(96,168,240,0.3)">
+      <div class="card-ti" style="color:var(--water)">月柱 · 癸酉 · 兄弟/成长环境宫</div>
+      <p><strong style="color:var(--water)">成长环境（月干癸 = 正印）：</strong>正印透干化杀。这代表你的原生家庭或成长环境极其重视正统教育与学识。你从小就被灌输了很强的规矩意识，家庭在学业上对你投入极大。</p>
+      <p><strong style="color:var(--metal)">兄弟/同僚象（月支酉 = 正官）：</strong>同龄人或兄弟姐妹多在体制内或拥有体面的正统职业。你们之间的相处充满客气与规则感，较少逾矩。</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-color:rgba(196,176,148,0.2)">
+      <div class="card-ti" style="color:var(--earth)">日柱 · 甲辰 · 自身与配偶宫</div>
+      <p><strong>配偶宫（日支辰 = 偏财）：</strong>夫妻宫自坐财库，且与月令酉金相合（辰酉合）。这意味着你的伴侣通常具备良好的经济基础，且深谙世故。你们的结合能够相互帮扶，共同积累财富，是极其现实且坚固的利益共同体。</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-color:rgba(232,108,79,0.25)">
+      <div class="card-ti" style="color:var(--fire)">时柱 · 己巳 · 晚年/子女宫</div>
+      <p><strong style="color:var(--earth)">子女象（时干己 = 正财，时支巳 = 食神）：</strong>食神生财。这意味着你的后代天生聪明、富有创造力（食神），且具备极强的经济头脑。子女有出息，能为你带来丰厚的回报。</p>
+      <p><strong>晚年归宿：</strong>文昌与天厨并临，代表着中晚年生活极其体面，充满文化修养与生活品质，且不受世俗打扰，清贵优裕。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾柒</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">称骨诀·先天能量演绎</div>
+      <div class="sec-en">BONE WEIGHT & DESTINY SCRIPT</div>
+    </div>
+  </div>
+  <!-- 【新增】称骨计算过程明细，增加专业可信度 -->
+  <div class="bone-wrap">
+    <div class="bone-num-wrap">
+      <div class="bone-num">4<span class="bone-unit">两</span>5<span class="bone-unit">钱</span></div>
+      <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.65rem;color:rgba(230,250,235,0.5);margin-top:10px;letter-spacing:0.1em">袁天罡称骨算命参阅</div>
+      <!-- 新增各柱分值明细 -->
+      <div class="bone-breakdown">
+        <div class="bone-item">
+          <span class="bone-item-lbl">年柱 甲申</span>
+          <span class="bone-item-val">1两1钱</span>
+        </div>
+        <div class="bone-item">
+          <span class="bone-item-lbl">月柱 癸酉</span>
+          <span class="bone-item-val">8钱</span>
+        </div>
+        <div class="bone-item">
+          <span class="bone-item-lbl">日柱 甲辰</span>
+          <span class="bone-item-val">1两2钱</span>
+        </div>
+        <div class="bone-item">
+          <span class="bone-item-lbl">时柱 己巳</span>
+          <span class="bone-item-val">1两4钱</span>
+        </div>
+      </div>
+    </div>
+    <div class="bone-body">
+      <p style="margin-bottom:14px;color:var(--pb);font-weight:500;font-size:1.02rem;font-style:italic;letter-spacing:0.06em">「此命终身驳杂多，六亲骨肉不相助；<br>命中男妇都难养，交过过成愁打愁。」</p>
+      <p>（注：古典断语往往偏向苛刻，需结合时代背景辩证看待）。<br>
+      实际深度解读：4两5钱的骨重，结合原局，断语中的"驳杂多"恰好印证了你早年行土金忌神大运时，承受的高压与内心挣扎。所谓"骨肉不相助"，是指你更适合独立闯荡，在体制与规矩中自己打拼出一条血路，不宜过度依赖原生家庭。这是典型的先苦后甜之局，早年的苦修是为了锻炼你坚韧的意志。当你步入中晚年的南方火运，火炼秋金，所有的阅历都将化为极其丰厚的财富，终成大器。</p>
+    </div>
+  </div>
+</section>
+
+<div class="verdict">
+  <div class="verdict-divider" style="margin-bottom:36px;">
+    <svg width="60" height="140" viewBox="0 0 60 140" style="opacity:0.85; margin-right:24px; transform: scaleX(-1);">
+      <path d="M30,140 C10,105 50,70 30,35 C10,0 30,-10 30,-10" fill="none" stroke="var(--water)" stroke-width="2.5"/>
+      <path d="M30,140 C50,105 10,70 30,35 C50,0 30,-10 30,-10" fill="none" stroke="var(--pb)" stroke-width="1.5"/>
+      <path d="M30,140 C20,120 40,90 30,60 C20,30 40,10 30,-5" fill="none" stroke="var(--water)" stroke-width="1" opacity="0.6"/>
+      <path d="M22,110 Q10,105 15,90 Q25,95 22,110" fill="var(--wood)" opacity="0.8"/>
+      <path d="M38,75 Q50,70 45,55 Q35,60 38,75" fill="var(--water)" opacity="0.9"/>
+      <path d="M22,40 Q10,35 15,20 Q25,25 22,40" fill="var(--wood)" opacity="0.8"/>
+      <path d="M38,15 Q50,10 45,-5 Q35,0 38,15" fill="var(--water)" opacity="0.7"/>
+    </svg>
+    <div class="verdict-kw" style="margin-bottom:0">火炼秋金</div>
+    <svg width="60" height="140" viewBox="0 0 60 140" style="opacity:0.85; margin-left:24px;">
+      <path d="M30,140 C10,105 50,70 30,35 C10,0 30,-10 30,-10" fill="none" stroke="var(--water)" stroke-width="2.5"/>
+      <path d="M30,140 C50,105 10,70 30,35 C50,0 30,-10 30,-10" fill="none" stroke="var(--pb)" stroke-width="1.5"/>
+      <path d="M30,140 C20,120 40,90 30,60 C20,30 40,10 30,-5" fill="none" stroke="var(--water)" stroke-width="1" opacity="0.6"/>
+      <path d="M22,110 Q10,105 15,90 Q25,95 22,110" fill="var(--wood)" opacity="0.8"/>
+      <path d="M38,75 Q50,70 45,55 Q35,60 38,75" fill="var(--water)" opacity="0.9"/>
+      <path d="M22,40 Q10,35 15,20 Q25,25 22,40" fill="var(--wood)" opacity="0.8"/>
+      <path d="M38,15 Q50,10 45,-5 Q35,0 38,15" fill="var(--water)" opacity="0.7"/>
+    </svg>
+  </div>
+  <div class="verdict-body">
+    你是生于仲秋的甲木，<br>
+    外表承受着肃杀之气的严苛规训，<br>
+    内心却得清泉的滋养，保持着不可妥协的清高。<br><br>
+    不要畏惧肩上沉重的责任与当前的低谷，<br>
+    那正是雕琢你这株大树的利刃。<br>
+    当你用印星的智慧化解压力，用深藏的火光融化冰霜，<br>
+    你必将凭借卓越的手腕化杀为权，<br>
+    成就不朽的青云之志。
+  </div>
+  <div class="verdict-seal" style="border-radius:4px;">命盘深度解读</div>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">ZenCode</div>
+  <div class="footer-txt">
+    本报告依据八字原局五行生克推演精算而成<br>
+    引经：《穷通宝鉴》《滴天髓》《三命通会》《渊海子平》《子平真诠》<br>
+    仅供命理研讨参考，不构成任何具体投资、医学、法律决策建议
+  </div>
+</div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.card, .yun-card, .rt-item, .ss-item, .oppo-box, .bone-wrap, .wx-power-card, .video-box, .ss-col, .map-module, .dayun-info-bar, .warn-box, .guiren-card, .yixiu-box').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  observer.observe(el);
+});
+
+/* ══ 全局 tooltip ══ */
+const tooltip=document.getElementById('global-tooltip');
+function showTooltip(html,x,y){
+  tooltip.innerHTML=html;
+  const tx=Math.min(x+16,window.innerWidth-300),ty=Math.min(y+16,window.innerHeight-200);
+  tooltip.style.left=tx+'px';tooltip.style.top=ty+'px';tooltip.classList.add('active');
+}
+function hideTooltip(){tooltip.classList.remove('active');}
+document.addEventListener('mouseover',e=>{const a=e.target.closest('.anchor');if(a)showTooltip(a.getAttribute('data-text'),e.clientX,e.clientY);});
+document.addEventListener('mousemove',e=>{const a=e.target.closest('.anchor');if(a){tooltip.style.left=Math.min(e.clientX+16,window.innerWidth-300)+'px';tooltip.style.top=Math.min(e.clientY+16,window.innerHeight-200)+'px';}});
+document.addEventListener('mouseout',e=>{if(e.target.closest('.anchor'))hideTooltip();});
+
+/* ══ 五行矩阵 canvas ══ */
+(function(){
+  const cv=document.getElementById('wxCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');let W,H,T=0,hovered=-1;
+  const elements=[
+    {name:'金',label:'金·官杀',color:'#D0D6DF',power:28,x:0,y:0,r:0,desc:'【极旺/压力】申酉金当令，主高压、自律与规矩，是成就事业的鞭策力。'},
+    {name:'水',label:'水·印星',color:'#60A8F0',power:22,x:0,y:0,r:0,desc:'【枢纽/智慧】癸水高透化杀，是最顶级的护身符，代表学历与贵人。'},
+    {name:'土',label:'土·财星',color:'#C4B094',power:25,x:0,y:0,r:0,desc:'【偏强/现实】辰己财星，落于晚年，主财富稳健入库。'},
+    {name:'木',label:'木·比劫/日主',color:'#7ADE94',power:18,x:0,y:0,r:0,desc:'【偏弱/自我】甲木逢秋，需水滋养，代表你内心的坚韧与不可折断的傲骨。'},
+    {name:'火',label:'火·食神',color:'#E86C4F',power:7,x:0,y:0,r:0,desc:'【深藏/第一用神】巳火藏丙，调候暖局，制杀且暗合生印，最为关键。'}
+  ];
+  const rels=[[0,1,false],[1,3,false],[3,4,false],[4,2,false],[2,0,false],[0,3,true],[3,2,true],[2,1,true],[1,4,true],[4,0,true]];
+  function resize(){
+    const rect=cv.getBoundingClientRect();const dpr=devicePixelRatio||1;
+    W=cv.width=rect.width*dpr;
+    const ch=cv.parentElement&&cv.parentElement.offsetWidth<480?260:320;
+    H=cv.height=ch*dpr;cv.style.height=ch+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const rw=rect.width,cx=rw/2,cy=ch/2,rad=Math.min(rw,ch)*0.31;
+    elements.forEach((e,i)=>{const a=i*(Math.PI*2/5)-Math.PI/2;e.x=cx+Math.cos(a)*rad;e.y=cy+Math.sin(a)*rad;e.r=Math.sqrt(e.power)*3.5+13;});
+  }
+  function draw(){
+    const rw=cv.width/(devicePixelRatio||1),ch=cv.height/(devicePixelRatio||1);
+    ctx.clearRect(0,0,rw,ch);
+    rels.forEach(([f,t,ke])=>{
+      const a=elements[f],b=elements[t];const pulse=Math.sin(T*0.03+(f+t))*0.3+0.7;
+      ctx.save();ctx.globalAlpha=0.42*pulse;ctx.strokeStyle=ke?'#C2C8D1':'#60A8F0';ctx.lineWidth=ke?1.8:1.3;
+      if(f===0&&t===1){ctx.strokeStyle='#60A8F0';ctx.lineWidth=3;ctx.globalAlpha=0.8;} 
+      if(f===1&&t===3){ctx.strokeStyle='#7ADE94';ctx.lineWidth=2;ctx.globalAlpha=0.6;} 
+      if(f===4&&t===0){ctx.strokeStyle='#E86C4F';ctx.lineWidth=2.5;ctx.globalAlpha=0.7;}
+      ctx.setLineDash(ke?[6,5]:[4,6]);ctx.lineDashOffset=-T*0.6;
+      const dx=b.x-a.x,dy=b.y-a.y,dist=Math.sqrt(dx*dx+dy*dy);
+      const sx=a.x+dx/dist*a.r,sy=a.y+dy/dist*a.r,ex=b.x-dx/dist*b.r,ey=b.y-dy/dist*b.r;
+      ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
+      const angle=Math.atan2(ey-sy,ex-sx);ctx.globalAlpha=0.62*pulse;ctx.setLineDash([]);ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex-10*Math.cos(angle-0.4),ey-10*Math.sin(angle-0.4));ctx.moveTo(ex,ey);ctx.lineTo(ex-10*Math.cos(angle+0.4),ey-10*Math.sin(angle+0.4));ctx.stroke();
+      ctx.restore();
+    });
+    elements.forEach((e,i)=>{
+      const pulse=Math.sin(T*0.04+i*1.2)*0.05+1,isHov=hovered===i;
+      ctx.save();if(isHov){ctx.shadowColor=e.color;ctx.shadowBlur=22;}
+      const grd=ctx.createRadialGradient(e.x,e.y,0,e.x,e.y,e.r*pulse*2);
+      grd.addColorStop(0,e.color+'28');grd.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.globalAlpha=isHov?1:0.6;ctx.fillStyle=grd;ctx.beginPath();ctx.arc(e.x,e.y,e.r*pulse*2,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=isHov?1:0.88;
+      ctx.fillStyle=e.color+'2A';ctx.strokeStyle=e.color;ctx.lineWidth=isHov?2.5:1.5;
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r*pulse,0,Math.PI*2);ctx.fill();ctx.stroke();
+      ctx.globalAlpha=1;ctx.fillStyle='#F2E6D8';
+      ctx.font=`bold ${e.r*0.82}px Ma Shan Zheng,serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(e.name,e.x,e.y);
+      ctx.font='12px Noto Sans SC,sans-serif';ctx.fillStyle=e.color;ctx.globalAlpha=0.88;ctx.fillText(e.power+'%',e.x,e.y+e.r+14);
+      ctx.restore();
+    });
+  }
+  function getHitIndex(mx,my){let hit=-1;elements.forEach((el,i)=>{const dx=mx-el.x,dy=my-el.y;if(Math.sqrt(dx*dx+dy*dy)<el.r+12)hit=i;});return hit;}
+  cv.addEventListener('mousemove',e=>{
+    const rect=cv.getBoundingClientRect();const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    const hit=getHitIndex(mx,my);hovered=hit;
+    if(hit>=0){const el=elements[hit];showTooltip(`<strong style="color:${el.color};font-size:1rem;display:block;margin-bottom:6px">${el.label}</strong>${el.desc}`,e.clientX,e.clientY);}else hideTooltip();
+    cv.style.cursor=hit>=0?'pointer':'default';
+  });
+  cv.addEventListener('mouseleave',()=>{hovered=-1;hideTooltip();});
+  cv.addEventListener('touchstart',e=>{
+    e.preventDefault();const touch=e.touches[0];const rect=cv.getBoundingClientRect();
+    const mx=touch.clientX-rect.left,my=touch.clientY-rect.top;const hit=getHitIndex(mx,my);
+    hovered=hit;if(hit>=0){const el=elements[hit];showTooltip(`<strong style="color:${el.color};font-size:1rem;display:block;margin-bottom:6px">${el.label}</strong>${el.desc}`,touch.clientX,touch.clientY);}
+  },{passive:false});
+  cv.addEventListener('touchend',()=>{hovered=-1;setTimeout(hideTooltip,1500);});
+  function loop(){T++;draw();requestAnimationFrame(loop);}
+  const ro=new ResizeObserver(()=>{ctx.setTransform(1,0,0,1,0,0);resize();});
+  ro.observe(cv);resize();loop();
+})();
+
+/* ══ 运势折线图 ══ */
+(function(){
+  const canvas=document.getElementById('fortuneChart');
+  if(!canvas||typeof Chart==='undefined')return;
+  const data=[
+    {yr:2009,lbl:'壬申大运',score:5.5,desc:'约5—14岁，早年运势。偏印坐杀。竞争高压，家境或有变迁。在严格规训中成长。'},
+    {yr:2019,lbl:'辛未大运★当前',score:6.5,desc:'15—24岁（2019—2028）。正官坐木库。财星破印，法考停滞低谷期，宜在规矩中逐步沉淀学识，转寻实习以应耗财之象。2027丁未年天乙贵人引动为转折点。'},
+    {yr:2029,lbl:'庚午大运',score:8.8,desc:'25—34岁（2029—2038）。七杀坐伤官。火炼秋金！调候第一用神发力，能力大幅提升，凭借才华与手腕掌控实权。'},
+    {yr:2039,lbl:'己巳大运',score:9.2,desc:'35—44岁（2039—2048）。正财坐食神。食神制杀生财，事业稳步扩张，地位极速上升的黄金十年。'},
+    {yr:2049,lbl:'戊辰大运 ★',score:9.8,desc:'45—54岁（2049—2058）。偏财干支一气。财富彻底爆发入库，掌控庞大资源，一生顶点。'},
+    {yr:2059,lbl:'丁卯大运',score:8.5,desc:'55—64岁（2059—2068）。伤官坐羊刃。根基极其稳固，功成名就，颐养天年。'}
+  ];
+  const nowIdx=1; 
+  const customPlugin={
+    id:'customLine',
+    afterEvent:(chart,args)=>{
+      const{event}=args;
+      if(event.type==='mouseout'){hideTooltip();return;}
+      if(event.type!=='mousemove')return;
+      const pts=chart.getElementsAtEventForMode(event,'nearest',{intersect:false},true);
+      if(pts.length){
+        const i=pts[0].index,d=data[i];
+        showTooltip(
+          `<strong style="color:#60A8F0;font-size:0.95rem;display:block;margin-bottom:6px">${d.yr}年起 · ${d.lbl}</strong><span style="color:#E86C4F;font-weight:600">综合势能：${d.score.toFixed(1)}</span><br><span style="color:rgba(230,250,235,0.85);font-size:0.8rem;line-height:1.7;display:inline-block;margin-top:6px">${d.desc}</span>`,
+          chart.canvas.getBoundingClientRect().left+event.x+18,
+          chart.canvas.getBoundingClientRect().top+event.y-90
+        );
+      }else hideTooltip();
+    },
+    afterDraw:(chart)=>{
+      if(nowIdx<0)return;
+      const pt=chart.getDatasetMeta(0).data[nowIdx];
+      const c2=chart.ctx,{top,bottom}=chart.chartArea;
+      c2.save();c2.setLineDash([4,4]);c2.strokeStyle='rgba(96,168,240,0.8)';c2.lineWidth=1.5;
+      c2.beginPath();c2.moveTo(pt.x,top);c2.lineTo(pt.x,bottom);c2.stroke();
+      c2.fillStyle='rgba(96,168,240,0.95)';c2.font='bold 11px Noto Sans SC';c2.textAlign='center';
+      c2.fillText('▼ 当前 辛未',pt.x,top-10);c2.restore();
+    }
+  };
+  new Chart(canvas,{
+    type:'line',
+    data:{
+      labels:data.map(d=>d.yr+''),
+      datasets:[{
+        label:'势能指数',
+        data:data.map(d=>d.score),
+        borderColor:'#60A8F0',
+        backgroundColor:(ctx)=>{
+          const g=ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+          g.addColorStop(0,'rgba(96,168,240,0.35)');g.addColorStop(1,'rgba(96,168,240,0.02)');return g;
+        },
+        borderWidth:2,fill:true,tension:0.4,
+        pointBackgroundColor:data.map(d=>d.yr===2049?'#60A8F0':'#020503'),
+        pointBorderColor:data.map((d,i)=>{
+          if(d.yr===2049)return '#E6F5EA';
+          if(i===nowIdx)return'rgba(96,168,240,0.9)';
+          return'rgba(96,168,240,0.8)';
+        }),
+        pointRadius:data.map((d,i)=>d.yr===2049?7:(i===nowIdx?6:4)),
+        pointHoverRadius:8,
+        pointBorderWidth:data.map((d,i)=>d.yr===2049?2.5:(i===nowIdx?2.5:1.5))
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{
+        x:{grid:{color:'rgba(230,250,235,0.04)'},ticks:{color:'rgba(230,250,235,0.5)',font:{family:'Noto Sans SC',size:10},maxRotation:45,autoSkip:true,maxTicksLimit:8},border:{display:false}},
+        y:{min:2,max:10.5,grid:{color:'rgba(230,250,235,0.04)'},ticks:{color:'rgba(230,250,235,0.5)',font:{family:'Noto Sans SC',size:10},stepSize:1},border:{display:false}}
+      }
+    },
+    plugins:[customPlugin]
+  });
+})();
+
+/* ══ 动态背景 (翠绿柳枝与林光) ══ */
+(function(){
+  const canvas = document.getElementById('bgCanvas');
+  const ctx2d = canvas.getContext('2d');
+  let W, H, time = 0;
+  let particles=[], willows=[], rays=[];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    particles=[]; willows=[]; rays=[];
+    
+    for(let i=0;i<60;i++) particles.push({
+      x:Math.random()*W, y:Math.random()*H,
+      size:Math.random()*2+0.5, vx:(Math.random()-0.5)*0.4, vy:-Math.random()*0.35-0.1,
+      alpha:Math.random()*0.5+0.2, pulse:Math.random()*Math.PI*2
+    });
+    for(let i=0;i<10;i++) willows.push({
+      x:W*(i/9)+(Math.random()*40-20), len:H*0.55+Math.random()*H*0.2,
+      sway:Math.random()*100, thick:Math.random()*2+1
+    });
+    for(let i=0;i<4;i++) rays.push({
+      x:W*0.1+i*W*0.25+Math.random()*80, w:90+Math.random()*100, angle:0.25+Math.random()*0.15
+    });
+  }
+  window.addEventListener('resize', resize);
+
+  function drawFrame() {
+    time++;
+    ctx2d.clearRect(0, 0, W, H);
+
+    const fog = ctx2d.createLinearGradient(0,H*0.7,0,H);
+    fog.addColorStop(0,'rgba(20,60,25,0)'); fog.addColorStop(1,'rgba(10,40,15,0.3)');
+    ctx2d.fillStyle=fog; ctx2d.fillRect(0,0,W,H);
+
+    ctx2d.globalCompositeOperation='screen';
+    rays.forEach(r=>{
+      const grd=ctx2d.createLinearGradient(r.x,0,r.x+Math.cos(r.angle)*H,H);
+      grd.addColorStop(0,'rgba(180,255,160,0.08)');
+      grd.addColorStop(0.5,'rgba(180,255,160,0.03)');
+      grd.addColorStop(1,'rgba(180,255,160,0)');
+      ctx2d.fillStyle=grd; ctx2d.beginPath();
+      const hw=r.w/2;
+      ctx2d.moveTo(r.x-hw,0); ctx2d.lineTo(r.x+hw,0);
+      ctx2d.lineTo(r.x+hw+Math.cos(r.angle)*H,H); ctx2d.lineTo(r.x-hw+Math.cos(r.angle)*H,H);
+      ctx2d.fill();
+    });
+    ctx2d.globalCompositeOperation='source-over';
+
+    willows.forEach(w=>{
+      const sway=Math.sin(time*0.008+w.sway)*22;
+      ctx2d.beginPath(); ctx2d.moveTo(w.x,0);
+      ctx2d.quadraticCurveTo(w.x+sway*0.5,w.len*0.5,w.x+sway,w.len);
+      ctx2d.strokeStyle=`rgba(25,75,30,0.55)`; ctx2d.lineWidth=w.thick; ctx2d.stroke();
+      for(let j=0;j<5;j++){
+        const ty=w.len*(0.3+j*0.14), tx=w.x+sway*(ty/w.len), sway2=Math.sin(time*0.012+w.sway+j)*35;
+        ctx2d.beginPath(); ctx2d.moveTo(tx,ty);
+        ctx2d.quadraticCurveTo(tx+sway2*0.6,ty+60,tx+sway2,ty+110);
+        ctx2d.strokeStyle='rgba(80,160,80,0.25)'; ctx2d.lineWidth=0.8; ctx2d.stroke();
+      }
+    });
+
+    particles.forEach(p=>{
+      p.pulse+=0.018; const a=p.alpha*(0.5+0.5*Math.sin(p.pulse));
+      ctx2d.beginPath(); ctx2d.arc(p.x,p.y,p.size*(0.8+0.35*Math.sin(p.pulse)),0,Math.PI*2);
+      ctx2d.fillStyle=`rgba(200,255,180,${a})`;
+      ctx2d.shadowBlur=6; ctx2d.shadowColor='rgba(160,255,120,0.4)'; ctx2d.fill(); ctx2d.shadowBlur=0;
+      p.x+=p.vx+Math.sin(time*0.009+p.y*0.007)*0.8; p.y+=p.vy;
+      if(p.y<-10) p.y=H+10; if(p.x<-10) p.x=W+10; if(p.x>W+10) p.x=-10;
+    });
+
+    requestAnimationFrame(drawFrame);
+  }
+  
+  resize();
+  drawFrame();
+})();
+
+/* ══ 舒缓氛围音效 (自然木系) ══ */
+let audioCtx=null,audioReady=false,audSrc=null;
+function getAudioCtx(){const AC=window.AudioContext||window.webkitAudioContext;if(!audioCtx)audioCtx=new AC();return audioCtx;}
+
+function createNoise(ctx) {
+  const bufSize = ctx.sampleRate * 3;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+  for (let i=0; i<bufSize; i++) {
+    const w = Math.random()*2-1;
+    b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+    b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+    b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+    data[i] = (b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11;
+    b6 = w*0.115926;
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = buf; src.loop = true;
+  return src;
+}
+
+function playAmbientWood(){
+  const ctx = getAudioCtx();
+  if(ctx.state === 'suspended') ctx.resume();
+  if(audSrc) try { audSrc.stop(); } catch(e){} 
+
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(0, ctx.currentTime);
+  master.gain.linearRampToValueAtTime(0.35, ctx.currentTime+1.5);
+  master.connect(ctx.destination);
+
+  const noise = createNoise(ctx);
+  const hp = ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=800; hp.Q.value=0.5;
+  noise.connect(hp); hp.connect(master);
+  
+  function chirp() {
+    if(ctx.state !== 'running') return;
+    const osc = ctx.createOscillator();
+    const g2 = ctx.createGain();
+    osc.frequency.value = 2200 + Math.random()*1400;
+    osc.type = 'sine';
+    g2.gain.setValueAtTime(0, ctx.currentTime);
+    g2.gain.linearRampToValueAtTime(0.18, ctx.currentTime+0.04);
+    g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.22);
+    osc.connect(g2); g2.connect(master);
+    osc.start(); osc.stop(ctx.currentTime+0.25);
+    setTimeout(chirp, 1800+Math.random()*3500);
+  }
+  chirp();
+  noise.start();
+
+  audSrc = { stop: () => { try { noise.stop(); } catch(e){} } };
+}
+
+const abtn=document.getElementById('audio-btn'),ahint=document.getElementById('audio-hint'),ahintClose=document.getElementById('audio-hint-close');
+if(ahintClose){ahintClose.addEventListener('click',e=>{e.stopPropagation();ahint.style.display='none';});}
+abtn.addEventListener('click',()=>{
+  if(!audioReady){
+    audioReady=true;if(ahint)ahint.style.display='none';
+    abtn.textContent='♫';abtn.title='点击暂停音效';
+    playAmbientWood();
+  }else{
+    const c=getAudioCtx();
+    if(c.state==='running'){c.suspend();abtn.textContent='♪';abtn.title='点击播放沉浸音效';}
+    else{c.resume();abtn.textContent='♫';abtn.title='点击暂停音效';}
+  }
+});
+</script>
+</body>
+</html>
