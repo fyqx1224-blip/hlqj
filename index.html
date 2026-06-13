@@ -288,16 +288,14 @@ body::after {
 .rt-tag.hot{background:rgba(232,108,79,0.18);color:#F0E1E1;border:1px solid rgba(232,108,79,0.4)}
 .rt-tag.warm{background:rgba(122,222,148,0.15);color:#E1F0E1;border:1px solid rgba(122,222,148,0.4)}
 
-/* 地图模块 */
-.map-module{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:start;background:rgba(5,10,6,0.85);border:1px solid rgba(90,184,108,0.2);border-radius:6px;padding:36px 40px;margin:20px 0;backdrop-filter:blur(20px)}
-.map-text h3{color:var(--pb);font-size:1.04rem;margin-bottom:16px;letter-spacing:0.09em;display:flex;align-items:center;gap:9px;font-family:'Noto Sans SC',sans-serif;}
-.map-text p{font-size:0.9rem;line-height:2.15;color:rgba(230,250,235,0.82);font-weight:300;margin-bottom:20px}
-.city-tags{display:flex;flex-direction:column;gap:10px}
-.city-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;font-size:0.8rem;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.08em;cursor:pointer;transition:all .3s;width:fit-content}
-.city-tag.wood-tag{background:rgba(122,222,148,0.15);border:1px solid rgba(122,222,148,0.4);color:#E1F0E1}
-.city-tag.fire-tag{background:rgba(232,108,79,0.15);border:1px solid rgba(232,108,79,0.4);color:#F0E1E1}
-.city-tag:hover{transform:translateX(5px)}
-.map-svg-container{position:relative;border-radius:6px;overflow:hidden;background:rgba(2,5,3,0.8);border:1px solid rgba(90,184,108,0.2)}
+/* 地图模块重构为三列 */
+.geo-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin:24px 0; }
+.geo-col { background:rgba(5,10,6,0.85); border:1px solid rgba(90,184,108,0.15); border-radius:6px; padding:28px 24px; backdrop-filter:blur(20px); transition:all .35s; }
+.geo-col:hover { border-color:rgba(90,184,108,0.4); transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+.geo-col-ti { font-size:0.95rem; color:var(--pb); font-weight:600; margin-bottom:16px; letter-spacing:0.06em; font-family:'Noto Sans SC',sans-serif; display:flex; align-items:center; gap:8px; border-bottom:1px dashed rgba(90,184,108,0.2); padding-bottom:12px; }
+.geo-col-ti::before { content:'📍'; font-size:0.8rem; }
+.geo-desc { font-size:0.84rem; line-height:2.1; color:rgba(230,250,235,0.85); font-weight:300; }
+.geo-tag { display:inline-block; font-size:0.7rem; font-family:'Noto Sans SC',sans-serif; padding:4px 10px; border-radius:12px; margin-bottom:12px; margin-right:6px; letter-spacing:0.05em; }
 
 .yun-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-top:24px}
 .yun-card{background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.15);border-radius:6px;padding:22px 16px;position:relative;transition:all .35s;backdrop-filter:blur(24px);display:flex;flex-direction:column}
@@ -306,10 +304,6 @@ body::after {
 .yun-age{font-size:0.6rem;color:var(--pb);opacity:0.8;margin-bottom:8px;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.12em}
 .yun-stem{font-family:'Ma Shan Zheng',cursive;font-size:2.1rem;line-height:1;margin-bottom:12px;display:flex;gap:4px}
 .yun-desc{font-size:0.76rem;color:rgba(230,250,235,0.88);line-height:1.85;flex-grow:1;font-weight:300}
-.yun-quality{display:inline-block;font-size:0.56rem;letter-spacing:0.12em;padding:3px 7px;border-radius:3px;margin-top:9px;font-family:'Noto Sans SC',sans-serif}
-.q-great{background:rgba(90,184,108,0.2);color:#E1F0E1;border:1px solid rgba(90,184,108,0.4)}
-.q-good{background:rgba(232,108,79,0.12);color:#F0E1E1;border:1px solid rgba(232,108,79,0.3)}
-.q-warn{background:rgba(96,168,240,0.2);color:#DCE6EB;border:1px solid rgba(96,168,240,0.4)}
 
 /* ══ 大运信息栏 ══ */
 .dayun-info-bar{display:flex;align-items:center;flex-wrap:wrap;gap:20px;background:rgba(5,10,6,0.88);border:1px solid rgba(90,184,108,0.2);border-radius:6px;padding:18px 28px;margin-bottom:24px;backdrop-filter:blur(20px)}
@@ -373,6 +367,7 @@ body::after {
   .card,.oppo-box,.warn-box,.taisui-box{padding:20px 14px;margin:14px 0}
   .card p{font-size:0.88rem;line-height:2.1}
   .dishi-grid,.ss-grid,.romance-diagram{grid-template-columns:1fr}
+  .geo-grid{grid-template-columns:1fr}
   .guiren-grid{grid-template-columns:1fr}
   .yun-grid{grid-template-columns:1fr}
   .wealth-tier{flex-direction:column}
@@ -439,7 +434,6 @@ body::after {
       <div class="p-tg c-wood">甲</div>
       <div class="p-dz c-metal">申</div>
       <div class="p-dz-god">七杀</div>
-      <!-- 【修正1】日主甲木在年支申金为"绝"位，正确 -->
       <div class="p-cs">日主甲木 · 绝</div>
       <div class="p-hidden">庚 壬 戊</div>
       <div class="p-nayin">泉中水</div>
@@ -450,7 +444,6 @@ body::after {
       <div class="p-tg c-water">癸</div>
       <div class="p-dz c-metal">酉</div>
       <div class="p-dz-god">正官</div>
-      <!-- 【修正2】统一以日主甲木论长生：甲木在月支酉金为"胎"位，并非癸水的状态 -->
       <div class="p-cs">日主甲木 · 胎</div>
       <div class="p-hidden">辛</div>
       <div class="p-nayin">剑锋金</div>
@@ -471,7 +464,6 @@ body::after {
       <div class="p-tg c-earth">己</div>
       <div class="p-dz c-fire">巳</div>
       <div class="p-dz-god">食神</div>
-      <!-- 【修正3】日主甲木在时支巳火为"病"位，正确 -->
       <div class="p-cs">日主甲木 · 病</div>
       <div class="p-hidden">丙 戊 庚</div>
       <div class="p-nayin">大林木</div>
@@ -479,6 +471,7 @@ body::after {
   </div>
 </section>
 
+<!-- 壹：格局 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">壹</div>
@@ -516,7 +509,6 @@ body::after {
   </div>
 
   <div class="wx-sec-title">五行力量分布</div>
-  <!-- 【修正4】官杀+金对应总量约28%（申酉两支）与原文35%校正，土约20%，整体与十神矩阵保持一致 -->
   <div class="wx-power-grid">
     <div class="wx-power-card">
       <div class="wx-p-char" style="color:var(--metal)">金</div>
@@ -565,7 +557,7 @@ body::after {
   </div>
 </section>
 
-<!-- 【修正5·贰章整体重写】统一以日主甲木论十二长生，纠正月柱"胎"的主体混淆错误 -->
+<!-- 贰：十二长生 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">贰</div>
@@ -581,10 +573,9 @@ body::after {
       <div class="ss-col-title" style="color:var(--metal)">年柱 ·【绝】甲木在申</div>
       <div class="ss-desc" style="line-height:1.8">处于能量谷底的绝地。意味着早年生活环境或家境曾经历过断层、重组，在严苛的环境中绝地求生，赋予了你破后而立的韧性与不畏强权的底气。</div>
     </div>
-    <!-- 【核心修正】原文写"月柱胎（酉）"但将其归为"癸水"的状态，导致混淆。正确：甲木在月支酉金确为"胎"位，但这是日主甲木的状态。现补全说明。 -->
     <div class="ss-col" style="border-color:rgba(208,214,223,0.3)">
       <div class="ss-col-title" style="color:var(--metal)">月柱 ·【胎】甲木在酉</div>
-      <div class="ss-desc" style="line-height:1.8">日主甲木在月令酉金处于胎位——如同种子在母体中孕育，能量微弱但充满潜力。这代表在青年时期，你在官杀极旺的高压环境中默默吸收养分，虽然当前感受到大量外部压制，但这正是为破土储能的蛰伏期。</div>
+      <div class="ss-desc" style="line-height:1.8">日主甲木在月令酉金处于胎位——如同种子在母体中孕育，能量微弱但充满潜力。这代表在青年时期，你在官杀极旺的高压环境中默默吸收养分，正是为破土储能的蛰伏期。</div>
     </div>
     <div class="ss-col" style="border-color:rgba(196,176,148,0.5); background:rgba(196,176,148,0.08)">
       <div class="ss-col-title" style="color:var(--earth)">日柱 ·【衰】甲木在辰</div>
@@ -597,6 +588,7 @@ body::after {
   </div>
 </section>
 
+<!-- 叁：纳音 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">叁</div>
@@ -609,41 +601,40 @@ body::after {
   <div class="dishi-grid">
     <div class="ss-col">
       <div class="ss-col-title" style="color:var(--water)">年柱 甲申 ·【泉中水】</div>
-      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「泉中水者，寒泉清冽，源出重山，不染尘埃。」</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「寒泉清冽，源出重山，不染尘埃。」</div>
       <div class="ss-desc" style="line-height:1.8">代表早年与外部环境。泉水清冽，赋予了你一种天然的清冷感与精神洁癖，在人群中总能保持清醒客观的局外人视角，不愿同流合污。</div>
     </div>
     <div class="ss-col">
       <div class="ss-col-title" style="color:var(--metal)">月柱 癸酉 ·【剑锋金】</div>
-      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「剑锋金者，白帝司权，刚健凌云，非水不能生。」</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「白帝司权，刚健凌云，非水不能生。」</div>
       <div class="ss-desc" style="line-height:1.8">隐藏在温和水面之下，是极其锐利的锋芒。这说明你内在拥有极强的原则性与执行力，一旦触碰底线，便会展现出剑出逢喉的决断力。</div>
     </div>
     <div class="ss-col">
       <div class="ss-col-title" style="color:var(--fire)">日柱 甲辰 ·【覆灯火】</div>
-      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「覆灯火者，金盏光华，玉台吐艳，照日月不照之处。」</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「金盏光华，玉台吐艳，照日月不照之处。」</div>
       <div class="ss-desc" style="line-height:1.8">代表核心真我与中年特质。身处金水之寒，你却是那一盏不灭的覆灯火。这意味着你有着牺牲自我照亮他人的悲悯情怀，是身边人的精神灯塔。</div>
     </div>
     <div class="ss-col">
       <div class="ss-col-title" style="color:var(--wood)">时柱 己巳 ·【大林木】</div>
-      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「大林木者，枝干撼风，柯条撑月，耸壑昂霄。」</div>
+      <div class="ss-rule" style="border-bottom:1px dashed rgba(90,184,108,0.2);padding-bottom:10px;margin-bottom:14px;color:rgba(230,250,235,0.6);font-size:0.75rem;">《三命通会》：「枝干撼风，柯条撑月，耸壑昂霄。」</div>
       <div class="ss-desc" style="line-height:1.8">晚年与事业归宿的写照。历经风霜，早年的弱木最终长成了参天的大林木，代表着你最终能构建起庇护他人的生态体系与稳固基业。</div>
     </div>
   </div>
 </section>
 
+<!-- 肆：十神潜意识 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">肆</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">十神潜意识与性格：高压克制与深层智慧</div>
       <div class="sec-en">TEN GODS & YIN-YANG DYNAMICS</div>
-      <!-- 【修正6】十神分布比例重写，与"官杀28%+印20%+财25%+木18%+火7%"的五行总量保持一致 -->
       <div class="sec-intro">将地支藏干的所有隐秘能量悉数剥离，我们能看到你潜意识中最真实的十神驱动力比例。注意观察深藏于申金之中的壬水偏印——它是原局最低调却关键的暗中助力。</div>
     </div>
   </div>
 
   <div class="tg-chart-box">
     <div class="card-ti" style="margin-bottom:24px;color:var(--pb)">十神核心驱动力分布矩阵（满编十行 · 含藏干）</div>
-    <!-- 【修正7】官杀由原40%改为28%（申酉金实际权重），与五行金旺比例一致 -->
     <div class="tg-row">
       <div class="tg-label-wrap"><div class="tg-label" style="color:var(--metal)">正官（阴金·酉）</div><div class="tg-sub">规矩/体制/顺从</div></div>
       <div class="tg-track"><div class="tg-fill metal" style="width:18%"></div></div>
@@ -704,7 +695,7 @@ body::after {
   </div>
 </section>
 
-<!-- ══ 新增章节：食神泄秀·才华密码 ══ -->
+<!-- 伍：食神才华 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">伍</div>
@@ -738,14 +729,9 @@ body::after {
       <div class="ss-desc">你有将复杂议题抽丝剥茧的本能——无论是学术研究、案例剖析还是政策解读，你的大脑天生擅长把庞大系统化为清晰逻辑链，这正是优秀法务与学者的共同特质。</div>
     </div>
   </div>
-
-  <div class="card" style="border-color:rgba(232,108,79,0.2)">
-    <div class="card-ti" style="color:var(--fire)">才华触发条件：何时最能进入心流？</div>
-    <p>食神深藏，有特定的激活路径：当你处于<strong>【火木流年/大运】</strong>期间（如2026丙午年），丙火得令，食神应期透出，你的创作力、思维速度与表达欲将比平时提升数倍，此时提笔写作、参加演讲、拍摄内容，产出质量会令自己意外。</p>
-    <p>反之，在<strong>【土金流年】</strong>重压期间（如现阶段），食神被压制，你会感到无法进入状态、灵感断流。<strong>破解方法：此时不要强逼自己"输出"，而是主动"输入"——大量阅读（印星补给）才是在静候食神苏醒前最有价值的事。</strong></p>
-  </div>
 </section>
 
+<!-- 陆：神煞全景 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">陆</div>
@@ -764,7 +750,6 @@ body::after {
     </div>
     <div class="ss-col" style="border-color:rgba(96,168,240,0.3)">
       <div class="ss-col-title" style="color:var(--water)">月柱 癸酉 · 兄弟宫</div>
-      <!-- 【修正8】删除"四大空亡"神煞——甲辰旬中空寅卯，酉在旬内不空亡，此项不成立 -->
       <div class="ss-rule">查法所得：国印、咸池（正桃花）、破碎、飞刃、流霞。</div>
       <div class="ss-desc" style="font-size:0.8rem;line-height:1.8">此宫最为复杂。【国印】代表掌权与公信力，利于体制；【咸池】即正桃花，落正官，主端庄魅力；然带有【飞刃】与【破碎】，说明在青年期或职场早期，常遭遇暗流、竞争摩擦，需以极高情商化解。</div>
     </div>
@@ -816,16 +801,15 @@ body::after {
       <div class="ss-rule">成因：「己巳为金神」。</div>
       <div class="ss-desc">金神主刚毅果决，不可犯其怒。时支暗藏的这种杀伐决断，意味着在关键时刻（或事业晚期），你具备极强的反击能力与手腕。</div>
     </div>
-    <!-- 【修正9】将原"四大空亡(酉)"替换为正确成立的贵人星 -->
     <div class="ss-item">
       <div class="ss-name" style="color:var(--water)">天乙贵人 (丑/未)</div>
       <div class="ss-rule">成因：「甲戊庚见牛羊（丑未）为贵人」。</div>
       <div class="ss-desc">天乙贵人是最强的逢凶化吉之星。命主甲年生，贵人在丑未两支。当流年或大运走到丑未（如2027丁未大运起始年），将迎来关键贵人相助，逢难皆有人救场。</div>
     </div>
   </div>
-
 </section>
 
+<!-- 柒：原局交锋与警报 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">柒</div>
@@ -900,11 +884,12 @@ body::after {
   </div>
 </section>
 
+<!-- 捌：学业与2026法考决战 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">捌</div>
     <div class="sec-ti-wrap">
-      <div class="sec-ti">学业跃迁与低谷破局：体制智慧与海外契机</div>
+      <div class="sec-ti">学业跃迁与破局大关：体制智慧与科甲制胜</div>
       <div class="sec-en">ACADEMIC JOURNEY & STUDY DYNAMICS</div>
       <div class="sec-intro">《渊海子平》：「印旺逢官，必主科甲连登。」官印相生格，天生具备在传统学术体系内深耕的潜质。但忌土生金（财破印），逢此类流年学业必受阻滞。</div>
     </div>
@@ -916,12 +901,17 @@ body::after {
     <p><strong>学历断言：</strong>你在正规体制内的学历晋升通道较为顺畅。完全具备考取国内知名高校研究生/法本/体制内核心编制的实力。只要稳住心态，利用水之印星化解压力，必有所成。</p>
   </div>
 
-  <div class="card" style="border-color:rgba(196,176,148,0.3)">
-    <div class="card-ti" style="color:var(--earth)">法考停滞与低谷剖析：顺应流年，转战实习</div>
-    <p>近期法考备考让你感到痛苦、停滞。这绝非代表你与法律行业存在排斥，而是极其清晰的"流年低谷效应"！</p>
-    <p><strong>底层命理剖析：</strong>目前（如2024甲辰年），辰为湿土，是命局的偏财星。流年之土强势生助原局的申酉金（官杀），导致精神压力剧增；更关键的是，土会克制你赖以生存的癸水（印星，代表学习、考试、证书），这在命理上称为<strong>【财星破印】</strong>。因此，这段时间你在学业上感到思绪阻塞、极度煎熬，完全符合运势规律。</p>
-    <p style="color:var(--pb);font-weight:500;margin-top:12px">◆ 破局实操指南：</p>
-    <p>在"财破印"的周期，硬磕考试往往事倍功半。既然流年走财运（财代表现实工作、变现、人际），<strong>你适合暂时放下死磕法考的执念，顺应运势转去寻找一份含金量高的实习或兼职。</strong>在工作实践中积累经验（主动应掉耗财之象），等待运势转暖（如2025、2026木火流年），再回头一举拿下证书，阻力将大大减小。</p>
+  <div class="card" style="border-color:rgba(122,222,148,0.35); background:linear-gradient(135deg,rgba(90,184,108,0.06),rgba(5,10,6,0.88))">
+    <div class="card-ti" style="color:var(--wood)">岁次丙午：火炼秋金，食神制杀问鼎科甲</div>
+    <div class="quote" style="margin-top:0;margin-bottom:14px">《滴天髓》云：「甲木参天，脱胎要火。春不容金，秋不容土。」《子平真诠》又云：「秋木逢火，谓之木火通明；食神制杀，英雄独压万人。」</div>
+    <p>回顾往昔，逢土金交战之年，财星破印，致使神思涩滞，如珠蒙尘，此乃命局大势中必然之蛰伏。然<strong>岁次丙午（2026年）</strong>，天干丙火正照，地支午火逢迎，命运之轮已然驶入命局第一喜用之“火旺之地”。</p>
+    <p><strong>底层格局赋能：</strong>原局时支深藏之食神“丙火”，借太岁之气强势透干。刑宪律法（法考）本属官杀之象，金气锐利；今逢太岁丙火猛烈克制，命理谓之“食神制杀，化杀为权”。此年神思极明，才智外化，尤善解构繁复之法理，正是借木火通明之势，斩破高压、脱胎换骨之大应期。</p>
+    <p style="color:var(--pb);font-weight:500;margin-top:12px">◆ 丙午岁考科甲实务勘略：</p>
+    <ul class="strat-list" style="margin-top:8px">
+      <li><strong>破壁立心：</strong>往岁之阻滞皆属流年之劫，今岁喜神当令，当聚气凝神。切勿被过往之阴霾所困，势必一鼓作气，以摧枯拉朽之姿应战。</li>
+      <li><strong>制杀化权：</strong>法考复习切忌死守章句（印星之弊），当以“食神泄秀”为旨。宜多研习真题案例，在攻防辩驳中触发灵感，以自身之法理逻辑驾驭卷面，方契合制杀之理。</li>
+      <li><strong>木火调候：</strong>备考期间宜养丙火之阳气。居所求明，起居循律，以充盈之精气温养甲木之本，方能承载连捷之战。</li>
+    </ul>
   </div>
 
   <div class="rt-timeline">
@@ -931,9 +921,9 @@ body::after {
       <div class="rt-item">
         <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
         <div class="rt-content">
-          <div class="rt-year">2026年 · 丙午年 <span class="rt-tag hot">才华突围·留学黄金窗口</span></div>
+          <div class="rt-year">2026年 · 丙午年 <span class="rt-tag hot">才华突围·法考黄金窗口</span></div>
           <div class="rt-gz">丙火食神 · 午火伤官</div>
-          <div class="rt-desc">第一用神【火】强势降临！木火通明，一扫前两年的阴霾与压抑。思维极度敏捷，阻力极小。此年极其适合冲刺法考、雅思托福，或直接提交海外留学申请，是出国阻力最小的绝佳节点。</div>
+          <div class="rt-desc">第一用神【火】强势降临！木火通明，一扫前两年的阴霾与压抑。思维极度敏捷，阻力极小。此年极其适合冲刺法考、雅思托福，或直接提交海外留学申请，是一战通关阻力最小的绝佳节点。</div>
         </div>
       </div>
       <div class="rt-item">
@@ -956,6 +946,7 @@ body::after {
   </div>
 </section>
 
+<!-- 玖：事业板块 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">玖</div>
@@ -986,149 +977,203 @@ body::after {
   </div>
 
   <div class="rt-timeline">
-    <div class="rt-title" style="color:var(--pb)">当前事业学业节奏建议</div>
-    <div class="quote" style="margin-top:0">Q: 现在是需要以拿证/读书为主，还是可以去工作变现？<br>A: 原局以【印星（学历/证书）】为化解官杀压力的终极护身符。长远战略<strong>必须</strong>以拿证读书为主。但短期战术上（今明两年财星破印），适宜先工作变现、积累实习经验，避开考试低谷期。</div>
+    <div class="rt-title" style="color:var(--pb)">丙午岁科考战略铁律</div>
+    <div class="quote" style="margin-top:0">
+      <strong>问：法考在即，科名与禄马（谋职变现）孰轻孰重？</strong><br>
+      <strong>答：潜心藏器，一击必中！</strong>命书云：“印绶护身，杀刃无忌”。于命主而言，印星（功名、文凭）乃立身御制官杀之根本。岁次丙午，正是火之用神克制官杀最盛之时，<strong>切不可因蝇头之利（凡俗实习、兼职变现）而乱心分神</strong>。当屏息诸虑，闭关修印，借丙午之烈焰，斩获科甲，定可一战功成。
+    </div>
   </div>
 </section>
 
+<!-- 拾：地理风水（重构为三大板块） -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">拾</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">地理风水与全球择城：避开内耗，寻找火木</div>
       <div class="sec-en">DOMESTIC & INTERNATIONAL GEOGRAPHIC STRATEGY</div>
-      <div class="sec-intro">在长期工作和生活的城市选择上，方位直接决定了你的内耗程度。你问哪个地理方向更利于事业和财运？答案藏在五行的生克之中。</div>
+      <div class="sec-intro">《滴天髓》言「木火通明」，地气之吉凶，全凭五行调候。在长期工作和生活的城市选择上，方位直接决定了你的内耗程度。以下为您划分【国内】、【亚洲内】、【亚洲外】三大地理维度的择城策略。</div>
     </div>
   </div>
 
-  <div class="map-module">
-    <div class="map-text">
-      <h3 style="color:var(--water)">🌏 核心城市选择策略</h3>
-      <p>细致甄别五行地气，切勿被表象误导：</p>
-      <div class="city-tags">
-        <div class="city-tag fire-tag anchor" data-text="<strong style='color:#F0E1E1'>🔴 东南/南方 (火木之地) · 事业财运最高上限</strong><br><br>代表：长三角（江浙沪）、大湾区（广深）。<br><br>东方属木（帮身），南方属火（第一调候用神）。若追求事业的成就上限、高薪变现与个人才华的彻底释放，去东南沿海或南方城市，将极大制约命局的寒冷与官杀压抑，迎来大发。这是最优解。">
-          🔴 东南/南方 (如江浙沪/广深) — 事业财运最优爆发区
-        </div>
-        <div class="city-tag anchor" style="background:rgba(96,168,240,0.15);border:1px solid rgba(96,168,240,0.4);color:#E1F0F0" data-text="<strong style='color:#60A8F0'>🔵 偏水之地 · 稳定与庇护</strong><br><br>代表：天津（金水交加）、大连、青岛等沿海。<br><br>注意：北京虽处北方，但作为皇城根基，实为厚重之【戊土与庚金】（土金为忌），去北京反易加重你的事业内耗与规矩压抑。若想在北方发展，天津带水略优于北京。真正能润泽你的，是沿海或更偏东的水木交界地带，利于求学与求稳。">
-          🔵 偏水之地 (如天津/沿海) — 稳定与体制庇佑 (避开北京厚土)
-        </div>
-        <div class="city-tag anchor" style="background:rgba(208,214,223,0.15);border:1px solid rgba(208,214,223,0.4);color:#D0D6DF" data-text="<strong style='color:#D0D6DF'>⚪ 西方 (忌地) · 高压深渊</strong><br><br>西部内陆、川渝等地。<br><br>金气极其旺盛，会极大加剧你的生存压力、竞争内耗与责任重担，非必要尽量避免长居。">
-          ⚪ 西方 — 竞争内耗加剧，尽量避开
-        </div>
+  <div class="geo-grid">
+    <!-- 国内 -->
+    <div class="geo-col">
+      <div class="geo-col-ti">🇨🇳 国内板块 · 事业重心</div>
+      <div class="geo-desc">
+        <span class="geo-tag" style="background:rgba(232,108,79,0.15); color:#F0E1E1; border:1px solid rgba(232,108,79,0.4)">🔴 极佳：东南/南方沿海</span><br>
+        <strong style="color:var(--fire)">【江浙沪、大湾区广深】</strong><br>
+        东方属木，南方属火（第一用神）。在此地发展，能极大化解命局的肃杀压抑，才华释放最彻底，事业财运的**最高上限**皆在东南方。<br><br>
+        <span class="geo-tag" style="background:rgba(96,168,240,0.15); color:#E1F0F0; border:1px solid rgba(96,168,240,0.4)">🔵 宜居：北方沿海</span><br>
+        <strong style="color:var(--water)">【天津、青岛、大连】</strong><br>
+        偏水之地，印星生身，宜求稳或体制内发展。<strong>注：需避开北京</strong>，北京虽为北，但皇城根基乃厚重“戊土庚金”（忌神），去北京反增内耗。<br><br>
+        <span class="geo-tag" style="background:rgba(208,214,223,0.15); color:#D0D6DF; border:1px solid rgba(208,214,223,0.4)">⚪ 规避：西部内陆</span><br>
+        <strong style="color:var(--metal)">【川渝、西北地区】</strong><br>
+        西方重金之地，极大加剧你的生存压力与竞争内耗。
+      </div>
+    </div>
+    
+    <!-- 亚洲内 -->
+    <div class="geo-col">
+      <div class="geo-col-ti">🌏 亚洲板块 · 出海第一站</div>
+      <div class="geo-desc">
+        <span class="geo-tag" style="background:rgba(122,222,148,0.15); color:#E1F0E1; border:1px solid rgba(122,222,148,0.4)">🟢 极佳：东南亚枢纽</span><br>
+        <strong style="color:var(--wood)">【新加坡、马来西亚、泰国】</strong><br>
+        地理居南（火）且木气繁盛。若从事涉外商务、跨国供应链或跨境出海，东南亚是绝佳的“食神生财”福地，心情愉悦且进账丰厚。<br><br>
+        <span class="geo-tag" style="background:rgba(96,168,240,0.15); color:#E1F0F0; border:1px solid rgba(96,168,240,0.4)">🔵 宜居：日韩列岛</span><br>
+        <strong style="color:var(--water)">【日本东京等东部、韩国】</strong><br>
+        位于大洋之东，水木交加。极其适合作为初期留学深造（印星化杀）或短期的文化进修地，能有效涵养身心。<br><br>
+        <span class="geo-tag" style="background:rgba(196,176,148,0.15); color:#E6DECE; border:1px solid rgba(196,176,148,0.4)">🟤 规避：中东/中亚</span><br>
+        <strong style="color:var(--earth)">【迪拜等西亚沙土国】</strong><br>
+        燥土生暗金，财星破印，容易因财生灾，工作高危且精神干涸。
       </div>
     </div>
 
-    <div class="map-svg-container">
-      <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block" role="img" aria-label="中国地图，标注命主喜用城市">
-        <rect width="440" height="380" fill="#0A0B0E"/>
-        <radialGradient id="seaGrad" cx="60%" cy="50%" r="70%">
-          <stop offset="0%" stop-color="#0A100C" stop-opacity="0.8"/>
-          <stop offset="100%" stop-color="#050A06" stop-opacity="1"/>
-        </radialGradient>
-        <rect width="440" height="380" fill="url(#seaGrad)"/>
-        <path d="M228,124 L204,128 L194,140 L202,157 L207,215 L193,257 L167,287 L141,306 L106,319 L88,313 L60,340 L50,380 L0,380 L0,283 L0,154 L9,165 L26,144 L44,124 L62,103 L79,83 L114,62 L158,51 L190,41 L238,41 L280,41 L282,100 L264,118 L228,124 Z" fill="rgba(96,168,240,0.03)" stroke="rgba(96,168,240,0.2)" stroke-width="1.2" stroke-linejoin="round"/>
-        <g class="anchor" data-text="偏水之地，印星化杀">
-          <circle cx="170" cy="120" r="18" fill="rgba(96,168,240,0.08)"/>
-          <circle cx="170" cy="120" r="5" fill="#60A8F0" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
-        </g>
-        <g class="anchor" data-text="南方/东方火木地，制杀调候">
-          <circle cx="141" cy="305" r="5" fill="#E86C4F" stroke="rgba(232,108,79,0.7)" stroke-width="1.2"/>
-          <circle cx="206" cy="220" r="5" fill="#7ADE94" stroke="rgba(122,222,148,0.7)" stroke-width="1.2"/>
-        </g>
-        <g class="anchor" data-text="西方金地，压力内耗">
-          <circle cx="80" cy="200" r="4.5" fill="rgba(208,214,223,0.65)" stroke="rgba(208,214,223,0.4)" stroke-width="0.8"/>
-        </g>
-        <text x="180" y="124" font-family="Noto Sans SC, sans-serif" font-size="10" fill="rgba(96,168,240,0.95)" font-weight="500">津/沿海(水)</text>
-        <text x="151" y="309" font-family="Noto Sans SC, sans-serif" font-size="9" fill="rgba(232,108,79,0.85)">大湾区(火)</text>
-        <text x="216" y="224" font-family="Noto Sans SC, sans-serif" font-size="9" fill="rgba(122,222,148,0.85)">江浙沪(木)</text>
-        <text x="90" y="204" font-family="Noto Sans SC, sans-serif" font-size="9" fill="rgba(208,214,223,0.6)">西方(金)</text>
-        <style>
-          @keyframes map-pulse{0%,100%{opacity:0.3}50%{opacity:0.7}}
-          .pulse-ring{animation:map-pulse 2.2s ease-in-out infinite;transform-origin:141px 305px}
-        </style>
-        <circle class="pulse-ring" cx="141" cy="305" r="16" fill="none" stroke="rgba(232,108,79,0.4)" stroke-width="1"/>
-      </svg>
+    <!-- 全球 -->
+    <div class="geo-col">
+      <div class="geo-col-ti">🌍 亚洲以外 · 终极庇护所</div>
+      <div class="geo-desc">
+        <span class="geo-tag" style="background:rgba(232,108,79,0.15); color:#F0E1E1; border:1px solid rgba(232,108,79,0.4)">🔴 极佳：南半球大洋洲</span><br>
+        <strong style="color:var(--fire)">【澳大利亚、新西兰】</strong><br>
+        南半球属火极旺之地！若有意长居海外或技术移民，大洋洲的火气能完美温暖你的“秋木凋零”之局，是终极的治愈与养老福地。<br><br>
+        <span class="geo-tag" style="background:rgba(122,222,148,0.15); color:#E1F0E1; border:1px solid rgba(122,222,148,0.4)">🟢 宜居：北美东海岸/北欧</span><br>
+        <strong style="color:var(--wood)">【纽约、波士顿 / 芬兰等】</strong><br>
+        北美东海岸与五大湖区（水木相生），或北欧极寒水地（虽冷但印星旺）。极度适合深造学术，攻读硕博，能在极其自由的氛围中做研究。<br><br>
+        <span class="geo-tag" style="background:rgba(208,214,223,0.15); color:#D0D6DF; border:1px solid rgba(208,214,223,0.4)">⚪ 规避：欧洲中西部</span><br>
+        <strong style="color:var(--metal)">【英国、德国大陆】</strong><br>
+        西方重金之地，历史包袱重，体制倾轧严重，不宜长留。
+      </div>
     </div>
   </div>
 </section>
 
+<!-- 拾壹：情缘与正缘时间线 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">拾壹</div>
     <div class="sec-ti-wrap">
-      <div class="sec-ti">情缘与健康：性向底色与双刃剑效应</div>
-      <div class="sec-en">ROMANCE, HEALTH & RISK MITIGATION</div>
-      <div class="sec-intro">因为你极度在意事业与财运，我们必须精准识别感情与健康这两个可能带来负面牵扯的"雷区"，提前布防。</div>
+      <div class="sec-ti">情缘婚运：智性恋底色与正缘降临时间线</div>
+      <div class="sec-en">ROMANCE, MARRIAGE & TRUE LOVE TIMELINE</div>
+      <div class="sec-intro">探讨感情之前，必须先看透你命理层面的亲密取向。甲木为纯阳参天大树，且原局官杀（传统上代表男性或权威）为忌，这意味着你在感情中极具“慕强”属性，唯有智性上的降维打击才能令你折服。</div>
     </div>
   </div>
 
   <div class="card" style="border-color:rgba(122,222,148,0.3)">
-    <div class="card-ti" style="color:var(--wood)">性向底色与慕强心理（智性恋特质）</div>
-    <p>探讨感情之前，必须先看透你命理层面的亲密取向。甲木身为纯阳之大树，扎根财库，且原局金（官杀，传统上代表男性或权威）极为旺盛但为忌神。这意味着什么？</p>
-    <p>这意味着你在潜意识的亲密关系取向中，具有极强的<strong>慕强与智性恋（Sapiosexual）特质</strong>，甚至带有一丝超脱性别的泛性向底色。你内心极为独立傲骨，极难对能力平庸、企图用传统大男子主义规训你的人产生真正的仰慕。你渴望的不是从属，而是被绝对的业务能力、高维的认知、或能给予你如癸水印星般无限包容的灵魂所深深折服。只要对方在精神和能力上足够强大，能与你并肩作战，性别的界限对你而言并不绝对。</p>
+    <div class="card-ti" style="color:var(--wood)">性向底色与慕强心理（智性恋 Sapiosexual 特质）</div>
+    <p>夫宫坐辰，藏印生身。你内心极其独立傲骨，极难对能力平庸、企图用传统大男子主义或世俗框架规训你的人产生真正的仰慕。你渴望的绝不是从属关系，而是被绝对的业务能力、高维的认知逻辑、或能给予你如癸水印星般无限包容的灵魂所深深折服。</p>
+    <p>只要对方在精神和能力上足够强大，能与你并肩作战、成为你智识上的引路人，性别的界限对你而言并不绝对。这是一份超脱世俗、带有一定泛性向底色的灵魂契约。</p>
   </div>
 
-  <div class="romance-diagram">
-    <div class="romance-box" style="border-color:rgba(232,108,79,0.4);background:rgba(232,108,79,0.04)">
-      <div class="romance-box-ti" style="color:var(--fire)">感情对事业的负面影响警报</div>
-      <p><strong>会影响吗？会。</strong>由于金（官杀/伴侣星）是你的忌神，如果过度沉溺于消耗型的感情，对方极可能给你带来巨大的精神压力、甚至试图控制你的事业节奏。特别是在土金旺的年份（如2028戊申年、2029己酉年、2030庚戌年冲夫妻宫），感情极易发生剧烈动荡，这种情绪内耗会直接拖垮你的事业进度。<strong>防范策略：</strong>在这些高危年份，务必坚持"事业第一"的原则，保持物理距离（异地恋）是最佳的化解方式。</p>
-    </div>
-    <div class="romance-box" style="border-color:rgba(208,214,223,0.4);background:rgba(208,214,223,0.04)">
-      <div class="romance-box-ti" style="color:var(--metal)">健康警报与调护防线</div>
-      <p>《黄帝内经》云，木主肝胆，金主肺骨。原局金旺克木（木受损），这意味着你在高压的官杀运势下，极易出现肝气郁结、偏头痛、颈椎劳损或睡眠质量下降。<strong>负面影响：</strong>身体一旦亮红灯，将直接导致你无法负荷高强度的竞争。<strong>减轻策略：</strong>日常切忌长期熬夜或压抑负面情绪。多亲近自然草木，适量进行拉伸等柔性运动；多饮用温热茶水，用【火与水】的能量来温养受损的甲木，保重身体即是保住事业的本钱。</p>
+  <div class="rt-timeline">
+    <div class="rt-title" style="color:var(--pb)">夫妻宫与官星引动：正缘相遇与婚恋时间线</div>
+    <div class="quote" style="margin-top:0">命理测婚：凡遇“官星合入夫宫（辰）”或“太岁冲开夫宫”之年，皆为情缘红鸾大动之应期。以下为你锁定未来感情爆破的关键节点。</div>
+    <div class="rt-items">
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2029年 · 己酉年 <span class="rt-tag hot">桃花合宫（正缘降临大吉之年）</span></div>
+          <div class="rt-gz">酉金正官 · 辰酉六合</div>
+          <div class="rt-desc"><strong>【最强婚运/正缘年】</strong>原局夫宫为“辰”，流年太岁为“酉”。辰酉完美六合，且“酉”本身就是你的正官星（伴侣星）兼正桃花！这一年天造地设，极易遇到各方面条件极其正统、门当户对、能在现实中托底的正缘，步入婚姻殿堂的概率极大。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2030年 · 庚戌年 <span class="rt-tag" style="background:rgba(208,214,223,0.18);color:#D0D6DF;border:1px solid rgba(208,214,223,0.4)">冲开夫宫（剧烈变动与大破大立）</span></div>
+          <div class="rt-gz">庚金七杀 · 辰戌相冲</div>
+          <div class="rt-desc"><strong>【激情与动荡并存】</strong>流年“戌”土猛烈冲动你的夫宫“辰”土，且天干透出七杀（偏缘/猛烈的激情）。此年感情必有一次极其剧烈的变动：若2029年未定局，此年必闪恋甚至闪婚；若已有伴侣，则面临重大摩擦与考验（不破不立）。此年缘分往往带着致命的吸引力，但伴随较强控制欲。</div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot mid"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2032年 · 壬子年 <span class="rt-tag warm">三合动宫（灵魂伴侣与高度契合）</span></div>
+          <div class="rt-gz">申子辰三合水局 · 印星化杀</div>
+          <div class="rt-desc"><strong>【温和包容的归宿】</strong>流年“子”水与原局的“申、辰”构成完美的【申子辰三合水局】。水为你的印星（包容、滋养）。这一年遇到的感情或产生的连结，极度温馨且充满精神上的救赎感。对方往往像兄长或导师，用无限的耐心化解你的高压。</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- 拾贰：体质与健康 -->
 <section class="section">
   <div class="sec-hd">
     <div class="sec-num">拾贰</div>
     <div class="sec-ti-wrap">
-      <div class="sec-ti">大运流年：逆行推演与南方大发</div>
-      <div class="sec-en">LUCK PILLARS & ANNUAL FORTUNE</div>
-      <div class="sec-intro">阳年女命，大运逆排。早年金水淬炼，中年步入南方火地制杀，这是一条典型的「先苦后甜、大器晚成」的轨迹。</div>
+      <div class="sec-ti">体质与健康：金木交战的隐患与防线</div>
+      <div class="sec-en">PHYSICAL CONSTITUTION & HEALTH VULNERABILITIES</div>
+      <div class="sec-intro">《黄帝内经》曰：“肝苦急，急食甘以缓之”。八字不只看富贵，更是精密的中医体质图谱。因为你极度在意事业，我们必须精准识别身体的“雷区”，提前布防。</div>
     </div>
   </div>
 
-  <div class="dayun-info-bar">
-    <div class="di-item">
-      <span class="di-label">当前大运</span>
-      <span class="di-val">辛未大运（2019—2028年）</span>
+  <div class="card" style="border-color:rgba(208,214,223,0.4); background:rgba(208,214,223,0.04)">
+    <div class="card-ti" style="color:var(--metal)">原局病机分析：金木交战的必然代价</div>
+    <p>命主日元为甲木，中医理论中，**甲木主肝胆、头部、神经系统及颈背脊椎**。然原局生于酉月申年，金属锐器极度强旺（官杀过重）。这在病理上呈现出典型的**“金木交战、木受克伐”**之象。</p>
+    <p><strong>先天易发病灶：</strong>你在长期高压或思虑过度时，极易出现**肝气郁结（情绪暴躁或抑郁交替）、偏头痛、严重失眠/神经衰弱、以及颈椎/腰椎的僵硬与骨患**。若任由内耗积压，身体一旦亮红灯，将直接击穿你辛苦建立的事业防线。减轻策略：日常多用【水火】温养，饮温热茶汤，练瑜伽拉伸筋骨，切忌长期熬夜伤肝伤血。</p>
+  </div>
+
+  <div class="rt-timeline">
+    <div class="rt-title" style="color:var(--pb)">健康高危流年预警时间线</div>
+    <div class="quote" style="margin-top:0">防患于未然：以下年份乃五行克战极度失衡之时，切忌过度透支体力。</div>
+    <div class="rt-items">
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2028年 · 戊申年 <span class="rt-tag" style="background:rgba(208,214,223,0.18);color:#D0D6DF;border:1px solid rgba(208,214,223,0.4)">本命年金锐伤木警报</span></div>
+          <div class="rt-gz">七杀并临 · 金木相砍</div>
+          <div class="rt-desc">**极度高危！**本命申金并临，且天干透戊土生金。金气达到恐怖的峰值，直接劈砍你的甲木。此年**务必防范金属锐器伤、交通磕碰车关、或不得不做的外科小手术**；精神压力极易导致神经系统崩溃。<strong>化解：年初主动洗牙、献血以应血光之灾，尽量避免极限运动。</strong></div>
+        </div>
+      </div>
+      <div class="rt-item">
+        <div class="rt-line"><div class="rt-dot high"></div><div class="rt-connector"></div></div>
+        <div class="rt-content">
+          <div class="rt-year">2030年 · 庚戌年 <span class="rt-tag hot">辰戌冲土·脾胃内分泌警报</span></div>
+          <div class="rt-gz">辰戌相冲 · 土气激荡</div>
+          <div class="rt-desc">流年“戌”冲动命局“辰”。辰戌皆为土，土在中医主脾胃、消化系统及女性内分泌（子宫附件）。此年剧烈相冲，情绪极易引发**严重的肠胃溃疡、消化不良或妇科内分泌大紊乱**。此年不可暴饮暴食，需定期做全面的消化道及妇科体检。</div>
+        </div>
+      </div>
     </div>
-    <span class="di-sep">✦</span>
-    <div class="di-item">
-      <span class="di-label">核心气场</span>
-      <span class="di-val">正官坐财库，高压沉淀期</span>
-    </div>
-    <span class="di-sep">✦</span>
-    <div class="di-item">
-      <span class="di-label">贵人年份</span>
-      <span class="di-val">2027丁未年（天乙贵人引动）</span>
+  </div>
+</section>
+
+<!-- 拾叁：大运流年 -->
+<section class="section">
+  <div class="sec-hd">
+    <div class="sec-num">拾叁</div>
+    <div class="sec-ti-wrap">
+      <div class="sec-ti">大运与流年：势能推演与周期实战</div>
+      <div class="sec-en">LUCK PILLARS & ANNUAL FORTUNE PROJECTIONS</div>
+      <div class="sec-intro">阳年女命，大运逆排。命运的宏观起伏由十年一步的「大运」决定基调，而具体事象的爆发则由「流年」太岁引动。本节严格遵循大运至流年的层级顺序推演。</div>
     </div>
   </div>
 
+  <!-- 【1. 大运折线图】 -->
   <div class="chart-wrap">
-    <div class="chart-title">大运势能折线图 · 中晚年火地巅峰</div>
+    <div class="chart-title" style="color:var(--pb); font-size:0.9rem">宏观势能：一生大运轨迹折线图</div>
     <div class="chart-inner">
-      <canvas id="fortuneChart" role="img" aria-label="命主整体运势轨迹折线图"></canvas>
+      <canvas id="fortuneChart" role="img" aria-label="命主大运整体运势轨迹"></canvas>
     </div>
   </div>
 
+  <!-- 【2. 大运卡片】 -->
   <div class="yun-grid">
     <div class="yun-card">
       <div class="yun-age">约5岁起运</div>
       <div class="yun-stem"><span class="c-water">壬</span><span class="c-metal">申</span></div>
       <div class="yun-desc">2009-2018：偏印坐七杀。官杀极旺，早年学业竞争压力巨大，环境较为动荡（驿马）。</div>
     </div>
-    <div class="yun-card current">
+    
+    <div class="yun-card current" style="grid-column: 1 / -1;">
       <div class="yun-age">15岁大运</div>
       <div class="yun-stem"><span class="c-metal">辛</span><span class="c-earth">未</span></div>
-      <div class="yun-desc">2019-2028：<strong>当前大运！</strong>正官坐财库。财星破印，法考停滞低谷期，宜在规矩中逐步沉淀学识，转寻实习以应耗财之象。</div>
+      <div class="yun-desc">2019-2028：<strong>当前大运！</strong>正官坐木库。前岁财破印绶，考运生波；然现已步入大运后半程的木火破局点，厚积薄发。</div>
     </div>
+    
     <div class="yun-card">
       <div class="yun-age">25岁大运</div>
       <div class="yun-stem"><span class="c-metal">庚</span><span class="c-fire">午</span></div>
-      <div class="yun-desc">2029-2038：七杀坐伤官。<strong>火炼秋金！</strong>调候第一用神发力，能力大幅提升，凭借才华与手腕掌控实权，事业迎来质的飞跃。</div>
+      <div class="yun-desc">2029-2038：七杀坐伤官。<strong>火炼秋金！</strong>调候第一用神全面发力，能力大幅提升，凭借才华与手腕掌控实权，事业迎来质的飞跃。</div>
     </div>
     <div class="yun-card">
       <div class="yun-age">35岁大运</div>
@@ -1138,7 +1183,7 @@ body::after {
     <div class="yun-card">
       <div class="yun-age">45岁大运</div>
       <div class="yun-stem"><span class="c-earth">戊</span><span class="c-earth">辰</span></div>
-      <div class="yun-desc">2049-2058：偏财干支一气。财富彻底爆发入库，掌控庞大资源，达至一生顶点，唯需注重防病。</div>
+      <div class="yun-desc">2049-2058：偏财干支一气。财富彻底爆发入库，掌控庞大资源，达至一生事业财富之巅峰。</div>
     </div>
     <div class="yun-card">
       <div class="yun-age">55岁大运</div>
@@ -1146,12 +1191,61 @@ body::after {
       <div class="yun-desc">2059-2068：伤官坐羊刃。根基极其稳固，功成名就，颐养天年。</div>
     </div>
   </div>
+
+  <div style="width:100%;height:1px;background:rgba(90,184,108,0.15);margin:48px 0;"></div>
+
+  <!-- 【3. 流年折线图】 -->
+  <div class="chart-wrap">
+    <div class="chart-title" style="color:var(--fire); font-size:0.9rem">微观势能：近十年流年波动折线图 (2024–2033)</div>
+    <div class="chart-inner">
+      <canvas id="liunianChart" role="img" aria-label="命主近十年流年运势轨迹"></canvas>
+    </div>
+  </div>
+
+  <!-- 【4. 流年卡片细解】 -->
+  <div class="yun-grid" style="grid-template-columns:1fr; gap:16px">
+    <div class="yun-card" style="border-color:rgba(232,108,79,0.5); background:rgba(232,108,79,0.06)">
+      <div class="yun-age">2026 丙午年</div>
+      <div class="yun-stem"><span class="c-fire">丙</span><span class="c-fire">午</span></div>
+      <div class="yun-desc">
+        <strong style="color:var(--fire)">【今年当令 · 食神制杀化权】</strong><br>
+        这是你近几年来最酣畅淋漓的用神巅峰之年！岁运交锋（辛未大运遇丙午年），发生极为罕见的<strong>“天地鸳鸯合”</strong>（丙辛化水，午未合）。太岁丙火（食神才华）不仅猛烈制伏官杀，更绝妙在于“丙辛化水”，将大运原本的体制压力（辛金正官）直接转化为护身通关的印星（水：文凭、证书）。今年法考必有如神助，才华大爆，一战通关！
+      </div>
+    </div>
+    
+    <div class="yun-card" style="border-color:rgba(122,222,148,0.3)">
+      <div class="yun-age">2027 丁未年</div>
+      <div class="yun-stem"><span class="c-fire">丁</span><span class="c-earth">未</span></div>
+      <div class="yun-desc">
+        <strong style="color:var(--wood)">【天乙贵人 · 伤官泄秀落地】</strong><br>
+        流年地支“未”为你命盘中最核心的天乙贵人。前期在26年的激烈筹备与冲刺，在这一年将彻底结果落地（拿证、入职、或收到满意的offer）。逢难皆有贵人出手托底。
+      </div>
+    </div>
+
+    <div class="yun-card" style="border-color:rgba(208,214,223,0.3)">
+      <div class="yun-age">2028 戊申年</div>
+      <div class="yun-stem"><span class="c-earth">戊</span><span class="c-metal">申</span></div>
+      <div class="yun-desc">
+        <strong style="color:var(--metal)">【本命犯煞 · 七杀并临洗牌】</strong><br>
+        流年干支土金极旺，本命年且与年柱伏吟。此年是生活底盘的大洗牌之年，内耗与压力极大，学业职场必有剧烈释放。切勿作重大高危决策，谨防骨伤病痛。
+      </div>
+    </div>
+
+    <div class="yun-card" style="border-color:rgba(196,176,148,0.3)">
+      <div class="yun-age">2029 己酉年 / 2030 庚戌年</div>
+      <div class="yun-stem"><span class="c-earth">合冲</span><span class="c-metal">动荡</span></div>
+      <div class="yun-desc">
+        <strong style="color:var(--earth)">【婚运枢纽 · 缘分激荡之秋】</strong><br>
+        29年“己酉”正桃花合入夫宫（辰酉合），正缘降临，极易谈婚论嫁；紧接着30年“庚戌”猛烈冲开财库与夫宫（辰戌冲），感情与财富双双面临大破大立。这两年需以极高情商稳住基本盘。
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ══ 新增章节：贵人速查年历 ══ -->
+<!-- 拾肆：贵人速查 -->
 <section class="section">
   <div class="sec-hd">
-    <div class="sec-num">拾叁</div>
+    <div class="sec-num">拾肆</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">贵人速查年历·逢凶化吉的关键节点</div>
       <div class="sec-en">NOBLE STAR GUIDE · ANNUAL FORTUNE ANCHORS</div>
@@ -1177,18 +1271,12 @@ body::after {
       每年申月（农历七月，约8月）是你的"自动消灾"档期。原本发酵中的麻烦往往在此月莫名化解，逢凶化吉概率最高，适合处理历史遗留的纠纷或重启被搁置的项目。</div>
     </div>
   </div>
-
-  <div class="card" style="border-color:rgba(122,222,148,0.2);margin-top:8px">
-    <div class="card-ti">如何用好贵人能量：三步应用指南</div>
-    <p><strong>第一步 · 排期：</strong>将重要的面试、签约、谈判、考试，优先排在天乙贵人年份（2027丁未）、文昌月（巳月）、月德月（申月）。这不是迷信，而是在你自身能量最旺盛的档期主动出击。</p>
-    <p><strong>第二步 · 认人：</strong>贵人往往藏在属丑或属未的人身上（天乙贵人）。生活中遇到这类人，多加维护，因为你们之间的缘分往往带有逢凶化吉的底层能量。</p>
-    <p><strong>第三步 · 守株：</strong>在非贵人时期（如土金旺月），不必强行冲刺，做好基础工作、蓄积实力即可。"贵人来了就冲，贵人未至就守"是最省力的节奏。</p>
-  </div>
 </section>
 
+<!-- 拾伍：甲辰日柱 -->
 <section class="section">
   <div class="sec-hd">
-    <div class="sec-num">拾肆</div>
+    <div class="sec-num">拾伍</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">甲辰日柱·人格密码深度解码</div>
       <div class="sec-en">JIACHEN DAY PILLAR · PERSONALITY ARCHETYPE</div>
@@ -1213,9 +1301,10 @@ body::after {
   </div>
 </section>
 
+<!-- 拾陆：用忌神实战 -->
 <section class="section">
   <div class="sec-hd">
-    <div class="sec-num">拾伍</div>
+    <div class="sec-num">拾陆</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">用神忌神·生活实战速查手册</div>
       <div class="sec-en">FAVORABLE & UNFAVORABLE ELEMENTS · LIFE APPLICATION GUIDE</div>
@@ -1272,9 +1361,10 @@ body::after {
   </div>
 </section>
 
+<!-- 拾柒：家庭六亲 -->
 <section class="section">
   <div class="sec-hd">
-    <div class="sec-num">拾陆</div>
+    <div class="sec-num">拾柒</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">六亲宫位·家庭关系图谱</div>
       <div class="sec-en">SIX RELATIONS & FAMILY DYNAMICS</div>
@@ -1304,20 +1394,19 @@ body::after {
   </div>
 </section>
 
+<!-- 拾捌：称骨算命 -->
 <section class="section">
   <div class="sec-hd">
-    <div class="sec-num">拾柒</div>
+    <div class="sec-num">拾捌</div>
     <div class="sec-ti-wrap">
       <div class="sec-ti">称骨诀·先天能量演绎</div>
       <div class="sec-en">BONE WEIGHT & DESTINY SCRIPT</div>
     </div>
   </div>
-  <!-- 【新增】称骨计算过程明细，增加专业可信度 -->
   <div class="bone-wrap">
     <div class="bone-num-wrap">
       <div class="bone-num">4<span class="bone-unit">两</span>5<span class="bone-unit">钱</span></div>
       <div style="font-family:'Noto Sans SC',sans-serif;font-size:0.65rem;color:rgba(230,250,235,0.5);margin-top:10px;letter-spacing:0.1em">袁天罡称骨算命参阅</div>
-      <!-- 新增各柱分值明细 -->
       <div class="bone-breakdown">
         <div class="bone-item">
           <span class="bone-item-lbl">年柱 甲申</span>
@@ -1384,7 +1473,7 @@ body::after {
   <div class="footer-logo">ZenCode</div>
   <div class="footer-txt">
     本报告依据八字原局五行生克推演精算而成<br>
-    引经：《穷通宝鉴》《滴天髓》《三命通会》《渊海子平》《子平真诠》<br>
+    引经：《穷通宝鉴》《滴天髓》《三命通会》《渊海子平》《子平真诠》《黄帝内经》<br>
     仅供命理研讨参考，不构成任何具体投资、医学、法律决策建议
   </div>
 </div>
@@ -1400,7 +1489,7 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.08 });
-document.querySelectorAll('.card, .yun-card, .rt-item, .ss-item, .oppo-box, .bone-wrap, .wx-power-card, .video-box, .ss-col, .map-module, .dayun-info-bar, .warn-box, .guiren-card, .yixiu-box').forEach(el => {
+document.querySelectorAll('.card, .yun-card, .rt-item, .ss-item, .oppo-box, .bone-wrap, .wx-power-card, .video-box, .ss-col, .geo-col, .dayun-info-bar, .warn-box, .guiren-card, .yixiu-box').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(16px)';
   el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
@@ -1491,13 +1580,13 @@ document.addEventListener('mouseout',e=>{if(e.target.closest('.anchor'))hideTool
   ro.observe(cv);resize();loop();
 })();
 
-/* ══ 运势折线图 ══ */
+/* ══ 大运折线图 ══ */
 (function(){
   const canvas=document.getElementById('fortuneChart');
   if(!canvas||typeof Chart==='undefined')return;
   const data=[
     {yr:2009,lbl:'壬申大运',score:5.5,desc:'约5—14岁，早年运势。偏印坐杀。竞争高压，家境或有变迁。在严格规训中成长。'},
-    {yr:2019,lbl:'辛未大运★当前',score:6.5,desc:'15—24岁（2019—2028）。正官坐木库。财星破印，法考停滞低谷期，宜在规矩中逐步沉淀学识，转寻实习以应耗财之象。2027丁未年天乙贵人引动为转折点。'},
+    {yr:2019,lbl:'辛未大运★当前',score:7.5,desc:'15—24岁（2019—2028）。正官坐木库。前岁财星破印，科甲蹉跎；今岁太岁丙午，火炼秋金，食神制杀化权。正是脱胎换骨、蟾宫折桂之绝佳应期，当屏息聚力，一战定乾坤。'},
     {yr:2029,lbl:'庚午大运',score:8.8,desc:'25—34岁（2029—2038）。七杀坐伤官。火炼秋金！调候第一用神发力，能力大幅提升，凭借才华与手腕掌控实权。'},
     {yr:2039,lbl:'己巳大运',score:9.2,desc:'35—44岁（2039—2048）。正财坐食神。食神制杀生财，事业稳步扩张，地位极速上升的黄金十年。'},
     {yr:2049,lbl:'戊辰大运 ★',score:9.8,desc:'45—54岁（2049—2058）。偏财干支一气。财富彻底爆发入库，掌控庞大资源，一生顶点。'},
@@ -1564,6 +1653,86 @@ document.addEventListener('mouseout',e=>{if(e.target.closest('.anchor'))hideTool
       }
     },
     plugins:[customPlugin]
+  });
+})();
+
+/* ══ 流年折线图 ══ */
+(function(){
+  const canvas=document.getElementById('liunianChart');
+  if(!canvas||typeof Chart==='undefined')return;
+  const lnData=[
+    {yr:2024, lbl:'甲辰', score:4.0, desc:'偏财破印。土金相生，压力极大，思绪受阻。'},
+    {yr:2025, lbl:'乙巳', score:6.5, desc:'太岁刑合。事多反复，先难后易，木火初现。'},
+    {yr:2026, lbl:'丙午', score:9.2, desc:'食神制杀。第一喜用发力，才华爆发，科甲必中！'},
+    {yr:2027, lbl:'丁未', score:8.5, desc:'贵人相助。天乙贵人落地，伤官泄秀，成果兑现。'},
+    {yr:2028, lbl:'戊申', score:3.5, desc:'七杀并临。高压洗牌，需防内耗与身体骨血病痛。'},
+    {yr:2029, lbl:'己酉', score:5.5, desc:'桃花合宫。正官合入夫宫，感情缘分极强。'},
+    {yr:2030, lbl:'庚戌', score:4.0, desc:'冲开财库。辰戌冲，动荡大变，不破不立。'},
+    {yr:2031, lbl:'辛亥', score:7.5, desc:'水气化杀。官印相生，压力化解，贵人扶持。'},
+    {yr:2032, lbl:'壬子', score:8.8, desc:'三合水局。印星极旺，海外缘深，名利双收。'},
+    {yr:2033, lbl:'癸丑', score:7.0, desc:'正印透干。稳步前行，积累深厚。'}
+  ];
+  const nowIdx=2; // 2026
+  const lnPlugin={
+    id:'lnLine',
+    afterEvent:(chart,args)=>{
+      const{event}=args;
+      if(event.type==='mouseout'){hideTooltip();return;}
+      if(event.type!=='mousemove')return;
+      const pts=chart.getElementsAtEventForMode(event,'nearest',{intersect:false},true);
+      if(pts.length){
+        const i=pts[0].index,d=lnData[i];
+        showTooltip(
+          `<strong style="color:#E86C4F;font-size:0.95rem;display:block;margin-bottom:6px">${d.yr}年 · ${d.lbl}</strong><span style="color:#7ADE94;font-weight:600">流年势能：${d.score.toFixed(1)}</span><br><span style="color:rgba(230,250,235,0.85);font-size:0.8rem;line-height:1.7;display:inline-block;margin-top:6px">${d.desc}</span>`,
+          chart.canvas.getBoundingClientRect().left+event.x+18,
+          chart.canvas.getBoundingClientRect().top+event.y-90
+        );
+      }else hideTooltip();
+    },
+    afterDraw:(chart)=>{
+      if(nowIdx<0)return;
+      const pt=chart.getDatasetMeta(0).data[nowIdx];
+      const c2=chart.ctx,{top,bottom}=chart.chartArea;
+      c2.save();c2.setLineDash([4,4]);c2.strokeStyle='rgba(232,108,79,0.8)';c2.lineWidth=1.5;
+      c2.beginPath();c2.moveTo(pt.x,top);c2.lineTo(pt.x,bottom);c2.stroke();
+      c2.fillStyle='rgba(232,108,79,0.95)';c2.font='bold 11px Noto Sans SC';c2.textAlign='center';
+      c2.fillText('▼ 当前 2026',pt.x,top-10);c2.restore();
+    }
+  };
+  new Chart(canvas,{
+    type:'line',
+    data:{
+      labels:lnData.map(d=>d.yr+''),
+      datasets:[{
+        label:'流年势能',
+        data:lnData.map(d=>d.score),
+        borderColor:'#E86C4F',
+        backgroundColor:(ctx)=>{
+          const g=ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+          g.addColorStop(0,'rgba(232,108,79,0.35)');g.addColorStop(1,'rgba(232,108,79,0.02)');return g;
+        },
+        borderWidth:2,fill:true,tension:0.4,
+        pointBackgroundColor:lnData.map(d=>d.yr===2026?'#E86C4F':'#020503'),
+        pointBorderColor:lnData.map((d,i)=>{
+          if(d.yr===2026)return '#F0E1E1';
+          if(i===nowIdx)return'rgba(232,108,79,0.9)';
+          return'rgba(232,108,79,0.8)';
+        }),
+        pointRadius:lnData.map((d,i)=>d.yr===2026?7:(i===nowIdx?6:4)),
+        pointHoverRadius:8,
+        pointBorderWidth:lnData.map((d,i)=>d.yr===2026?2.5:(i===nowIdx?2.5:1.5))
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{
+        x:{grid:{color:'rgba(230,250,235,0.04)'},ticks:{color:'rgba(230,250,235,0.5)',font:{family:'Noto Sans SC',size:10},maxRotation:45,autoSkip:true,maxTicksLimit:10},border:{display:false}},
+        y:{min:2,max:10.5,grid:{color:'rgba(230,250,235,0.04)'},ticks:{color:'rgba(230,250,235,0.5)',font:{family:'Noto Sans SC',size:10},stepSize:1},border:{display:false}}
+      }
+    },
+    plugins:[lnPlugin]
   });
 })();
 
